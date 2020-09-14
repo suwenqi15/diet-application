@@ -103,7 +103,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "styles": [],
+            "styles": [ "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"],
             "scripts": [],
             "assets": [
               {

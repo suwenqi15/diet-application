@@ -12,7 +12,7 @@ import { Papa } from 'ngx-papaparse';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page { 
 
   mainForm: FormGroup;
   Data: any[] = []
@@ -43,14 +43,25 @@ export class Tab1Page {
     private toast: ToastController,
     private router: Router    
     )
-   { this.type = 'breakfast';
+   { 
+     
+    let banana = {
+      food_name: "banana",
+      category:[''],
+      unit: [''],
+      qty: [''],
+      cho: [''],
+      fat: [''],
+    }
+
+
+    this.type = 'breakfast';
+    this.anArray.push(banana);
+    this.anArray.push(banana);
+    //{title: 'default-item1'},
+    //{title: 'default-item2'}
    
-   this.anArray = [
-    {title: 'item1'},
-    {title: 'item2'}
-   
-    
-];
+  
 
   
   }
@@ -61,10 +72,10 @@ export class Tab1Page {
     for(let j = 0; j < this.anArray.length; j++) {
       if(j == i){
         this.anArray.splice(j, 1);
+        this.deleteFood(j);
       }
     }
   }
-
 
   deleteFood(id){
     this.db.deleteFood(id).then(async(res) => {
@@ -76,17 +87,30 @@ export class Tab1Page {
     })
   }
   
+  segmentChanged(ev: any) {}
 
-    segmentChanged(ev: any) {
+  Add(){
+    //this.Reset();
+    let number = this.anArray.length + 1
+    //this.anArray.push({title:'item'+ number});
+    this.anArray.push(this.mainForm);
+    this.Reset();
+    console.log(this.anArray)
+  }
 
-    }
+  Reset(){
+    this.mainForm = this.formBuilder.group({
+      food_name: [''],
+      category:[''],
+      unit: [''],
+      qty: [''],
+      cho: [''],
+      fat: [''],
 
-    Add(){
-      let number = this.anArray.length + 1
-      this.anArray.push({title:'item'+ number});
-      console.log(this.anArray)
-    }
+    })
 
+   }
+  
     ngOnInit() {
       this.db.dbState().subscribe((res) => {
         if(res){
@@ -113,6 +137,7 @@ export class Tab1Page {
   
       this.mainForm = this.formBuilder.group({
         food_name: [''],
+        category: [''],
         unit: [''],
         qty: [''],
         cho: [''],
@@ -140,121 +165,119 @@ export class Tab1Page {
       }
     }
 
-    chosum3(){
-      this.sum3 = 0;
-      for(let cho of this.Data){
-         if(cho.cho != ""){
-          this.sum1 += cho.cho;
-         }
-      }
-    }
+    // chosum3(){
+    //   this.sum3 = 0;
+    //   for(let cho of this.Data){
+    //      if(cho.cho != ""){
+    //       this.sum1 += cho.cho;
+    //      }
+    //   }
+    // }
   
-    fatsum4(){
-      this.sum4 = 0;
-      for(let fat of this.Data){
-         if(fat.fat != ""){
-          this.sum2 += fat.fat;
-         }
-      }
-    }
+    // fatsum4(){
+    //   this.sum4 = 0;
+    //   for(let fat of this.Data){
+    //      if(fat.fat != ""){
+    //       this.sum2 += fat.fat;
+    //      }
+    //   }
+    // }
 
-    chosum5(){
-      this.sum5 = 0;
-      for(let cho of this.Data){
-         if(cho.cho != ""){
-          this.sum1 += cho.cho;
-         }
-      }
-    }
+    // chosum5(){
+    //   this.sum5 = 0;
+    //   for(let cho of this.Data){
+    //      if(cho.cho != ""){
+    //       this.sum1 += cho.cho;
+    //      }
+    //   }
+    // }
   
-    fatsum6(){
-      this.sum6 = 0;
-      for(let fat of this.Data){
-         if(fat.fat != ""){
-          this.sum2 += fat.fat;
-         }
-      }
-    }
+    // fatsum6(){
+    //   this.sum6 = 0;
+    //   for(let fat of this.Data){
+    //      if(fat.fat != ""){
+    //       this.sum2 += fat.fat;
+    //      }
+    //   }
+    // }
 
-    chosum7(){
-      this.sum7 = 0;
-      for(let cho of this.Data){
-         if(cho.cho != ""){
-          this.sum1 += cho.cho;
-         }
-      }
-    }
+    // chosum7(){
+    //   this.sum7 = 0;
+    //   for(let cho of this.Data){
+    //      if(cho.cho != ""){
+    //       this.sum1 += cho.cho;
+    //      }
+    //   }
+    // }
   
-    fatsum8(){
-      this.sum8 = 0;
-      for(let fat of this.Data){
-         if(fat.fat != ""){
-          this.sum2 += fat.fat;
-         }
-      }
-    }
+    // fatsum8(){
+    //   this.sum8 = 0;
+    //   for(let fat of this.Data){
+    //      if(fat.fat != ""){
+    //       this.sum2 += fat.fat;
+    //      }
+    //   }
+    // }
 
-    chosum9(){
-      this.sum9 = 0;
-      for(let cho of this.Data){
-         if(cho.cho != ""){
-          this.sum1 += cho.cho;
-         }
-      }
-    }
+    // chosum9(){
+    //   this.sum9 = 0;
+    //   for(let cho of this.Data){
+    //      if(cho.cho != ""){
+    //       this.sum1 += cho.cho;
+    //      }
+    //   }
+    // }
   
-    fatsum10(){
-      this.sum10 = 0;
-      for(let fat of this.Data){
-         if(fat.fat != ""){
-          this.sum2 += fat.fat;
-         }
-      }
-    }
+    // fatsum10(){
+    //   this.sum10 = 0;
+    //   for(let fat of this.Data){
+    //      if(fat.fat != ""){
+    //       this.sum2 += fat.fat;
+    //      }
+    //   }
+    // }
 
-    chosum11(){
-      this.sum11 = 0;
-      for(let cho of this.Data){
-         if(cho.cho != ""){
-          this.sum1 += cho.cho;
-         }
-      }
-    }
+    // chosum11(){
+    //   this.sum11 = 0;
+    //   for(let cho of this.Data){
+    //      if(cho.cho != ""){
+    //       this.sum1 += cho.cho;
+    //      }
+    //   }
+    // }
   
-    fatsum12(){
-      this.sum12 = 0;
-      for(let fat of this.Data){
-         if(fat.fat != ""){
-          this.sum2 += fat.fat;
-         }
-      }
-    }
+    // fatsum12(){
+    //   this.sum12 = 0;
+    //   for(let fat of this.Data){
+    //      if(fat.fat != ""){
+    //       this.sum2 += fat.fat;
+    //      }
+    //   }
+    // }
 
-    chosum13(){
-      this.sum13 = 0;
-      for(let cho of this.Data){
-         if(cho.cho != ""){
-          this.sum1 += cho.cho;
-         }
-      }
-    }
+    // chosum13(){
+    //   this.sum13 = 0;
+    //   for(let cho of this.Data){
+    //      if(cho.cho != ""){
+    //       this.sum1 += cho.cho;
+    //      }
+    //   }
+    // }
   
-    fatsum14(){
-      this.sum14 = 0;
-      for(let fat of this.Data){
-         if(fat.fat != ""){
-          this.sum2 += fat.fat;
-         }
-      }
-    }
-
-
-
+    // fatsum14(){
+    //   this.sum14 = 0;
+    //   for(let fat of this.Data){
+    //      if(fat.fat != ""){
+    //       this.sum2 += fat.fat;
+    //      }
+    //   }
+    // }
 
 
     storeData() {
       this.db.addFood(
         this.myDate,
+        this.mainForm.value.category,
         this.mainForm.value.food_name,
         this.mainForm.value.unit,
         this.mainForm.value.qty,
@@ -264,8 +287,6 @@ export class Tab1Page {
   
       })
     }
-
-
   }
   
   

@@ -60,8 +60,8 @@
     </ion-item-options>
       <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
       <ion-item  lines="none">
-      <ion-label class="label"> Food Name</ion-label>
-      <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder="Enter" ></ion-input>
+      <ion-label class="label"> {{att.food_name}}</ion-label>
+      <ion-input  formControlName = "food_name" type="text" required class = "right" >{{att.food_name}}</ion-input>
 
     </ion-item>
   

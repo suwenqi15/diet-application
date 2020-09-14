@@ -13,12 +13,16 @@ CREATE TABLE IF NOT EXISTS accounttable(
 CREATE TABLE IF NOT EXISTS dailyfoodtable(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         timeframe TEXT,
+        category TEXT,
         food_name TEXT, 
         unit TEXT, 
         qty INTEGER,
         cho REAL, 
         fat REAL
     );
+
+
+    
 
 CREATE TABLE IF NOT EXISTS dailyrecordtable(
     id INTEGER PRIMARY KEY AUTOINCREMENT, 

@@ -64,7 +64,8 @@ export class DbService {
         for (var i = 0; i < res.rows.length; i++) { 
           items.push({ 
             id: res.rows.item(i).id,
-            timeframe: res.rows.item(0).timeframe,  
+            timeframe: res.rows.item(i).timeframe,  
+            category: res.rows.item(i).category,
             food_name: res.rows.item(i).food_name,  
             unit: res.rows.item(i).unit,  
             qty: res.rows.item(i).qty, 
@@ -78,9 +79,9 @@ export class DbService {
   }
 
   // Add
-  addFood(timeframe, food_name, unit,qty,cho,fat) {
-    let data = [timeframe, food_name, unit,qty,cho,fat];
-    return this.storage.executeSql('INSERT INTO dailyfoodtable (timeframe, food_name, unit,qty,cho,fat) VALUES (?, ?, ?, ?, ?, ?)', data)
+  addFood(timeframe, category, food_name, unit,qty,cho,fat) {
+    let data = [timeframe, category, food_name, unit,qty,cho,fat];
+    return this.storage.executeSql('INSERT INTO dailyfoodtable (timeframe, category, food_name, unit,qty,cho,fat) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
     .then(res => {
       this.getFoods();
       
@@ -92,7 +93,8 @@ export class DbService {
     return this.storage.executeSql('SELECT * FROM dailyfoodtable WHERE id = ?', [id]).then(res => { 
       return {
         id: res.rows.item(0).id,
-        timeframe: res.rows.item(0).timeframe,  
+        timeframe: res.rows.item(0).timeframe,
+        category: res.rows.item(0).category,
         food_name: res.rows.item(0).food_name,  
         unit: res.rows.item(0).unit,  
         qty: res.rows.item(0).qty, 
@@ -104,7 +106,7 @@ export class DbService {
 
   // Update
   updateFood(id, food: Food) {
-    let data = [food.timeframe, food.food_name, food.unit,food.qty,food.cho,food.fat ];
+    let data = [food.timeframe, food.category, food.food_name, food.unit,food.qty,food.cho,food.fat ];
     return this.storage.executeSql(`UPDATE dailyfoodtable SET, timeframe=?, food_name = ?, unit = ? qty = ?, cho=?, fat=? WHERE id = ${id}`, data)
     .then(data => {
       this.getFoods();
