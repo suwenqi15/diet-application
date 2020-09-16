@@ -22,8 +22,14 @@ export class Tab1Page {
   public curFatLunch=0;
   public curChoDinner=0;
   public curFatDinner=0;
-  public curChoSnack=0;
-  public curFatSnack=0;
+  public curChoSnack1=0;
+  public curFatSnack1=0;
+  public curChoSnack2=0;
+  public curFatSnack2=0;
+  public curChoSnack3=0;
+  public curFatSnack3=0;
+  public curChoOthers=0;
+  public curFatOthers=0;
   public curChoTotal=0;
   public curFatTotal=0;
 
@@ -31,7 +37,10 @@ export class Tab1Page {
   public anArrayBreakfast:any=[];
   public anArrayLunch:any=[];
   public anArrayDinner:any=[];
-  public anArraySnack:any=[];
+  public anArraySnack1:any=[];
+  public anArraySnack2:any=[];
+  public anArraySnack3:any=[];
+  public anArrayOthers:any=[];
 
    myDate = new Date().toISOString().split('T')[0];
    type: string
@@ -79,14 +88,14 @@ public map:  Map<string, FormGroup> = new Map();
 
   removeItemLunch(i){
     console.log("i is" + i)
-    console.log("this.anArray is" + this.anArrayLunch)
+    console.log("this.anArrayLunch is" + this.anArrayLunch)
    for(let j = 0; j < this.anArrayLunch.length; j++) {
      if(j == i){
        this.anArrayLunch.splice(j, 1);
        //this.dbdeleteFood(j);
      }
    }
-   console.log("this.anArray is" + this.anArrayLunch)
+   console.log("this.anArrayLunch is" + this.anArrayLunch)
    this.analyzeChoAndFatLunch();
    this.analyzeChoAndFatTotal()
  }
@@ -105,19 +114,62 @@ public map:  Map<string, FormGroup> = new Map();
  this.analyzeChoAndFatTotal()
 }
 
-removeItemSnack(i){
+removeItemSnack1(i){
   console.log("i is" + i)
-  console.log("this.anArraySnack is" + this.anArraySnack)
- for(let j = 0; j < this.anArraySnack.length; j++) {
+  console.log("this.anArraySnack1 is" + this.anArraySnack1)
+ for(let j = 0; j < this.anArraySnack1.length; j++) {
    if(j == i){
-     this.anArraySnack.splice(j, 1);
+     this.anArraySnack1.splice(j, 1);
      //this.dbdeleteFood(j);
    }
  }
- console.log("this.anArranArraySnackay is" + this.anArraySnack)
- this.analyzeChoAndFatSnack();
+ console.log("this.anArranArraySnack1 is" + this.anArraySnack1)
+ this.analyzeChoAndFatSnack1();
  this.analyzeChoAndFatTotal()
 }
+
+removeItemSnack2(i){
+  console.log("i is" + i)
+  console.log("this.anArraySnack2 is" + this.anArraySnack2)
+ for(let j = 0; j < this.anArraySnack2.length; j++) {
+   if(j == i){
+     this.anArraySnack2.splice(j, 1);
+     //this.dbdeleteFood(j);
+   }
+ }
+ console.log("this.anArranArraySnack2 is" + this.anArraySnack2)
+ this.analyzeChoAndFatSnack2();
+ this.analyzeChoAndFatTotal()
+}
+
+removeItemSnack3(i){
+  console.log("i is" + i)
+  console.log("this.anArraySnack3 is" + this.anArraySnack3)
+ for(let j = 0; j < this.anArraySnack3.length; j++) {
+   if(j == i){
+     this.anArraySnack3.splice(j, 1);
+     //this.dbdeleteFood(j);
+   }
+ }
+ console.log("this.anArranArraySnack3 is" + this.anArraySnack3)
+ this.analyzeChoAndFatSnack3();
+ this.analyzeChoAndFatTotal()
+}
+
+removeItemOthers(i){
+  console.log("i is" + i)
+  console.log("this.anArrayOthers is" + this.anArrayOthers)
+ for(let j = 0; j < this.anArrayOthers.length; j++) {
+   if(j == i){
+     this.anArrayOthers.splice(j, 1);
+     //this.dbdeleteFood(j);
+   }
+ }
+ console.log("this.anArranArrayOthers is" + this.anArrayOthers)
+ this.analyzeChoAndFatOthers();
+ this.analyzeChoAndFatTotal()
+}
+
 
 
 
@@ -141,14 +193,14 @@ removeItemSnack(i){
 
 
    // section for saving and adding
- onSaveBreakfast(){
-   //maybe need to check for dedupe before save it.
-  this.analyzeChoAndFatBreakfast();
-  this.analyzeChoAndFatTotal()
-  console.log(this.foodCardForm)
-  this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-  console.log(this.map);
- }
+    onSaveBreakfast(){
+      //maybe need to check for dedupe before save it.
+      this.analyzeChoAndFatBreakfast();
+      this.analyzeChoAndFatTotal()
+      console.log(this.foodCardForm)
+      this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
+      console.log(this.map);
+    }
 
    onSaveLunch(){
    this.analyzeChoAndFatLunch();
@@ -165,13 +217,47 @@ removeItemSnack(i){
    console.log(this.map);
   }
 
-     onSaveSnack(){
-     this.analyzeChoAndFatSnack();
+     onSaveSnack1(){
+     this.analyzeChoAndFatSnack1();
      this.analyzeChoAndFatTotal()
      console.log(this.foodCardForm)
      this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
      console.log(this.map);
     }
+
+
+    onSaveSnack2(){
+      this.analyzeChoAndFatSnack2();
+      this.analyzeChoAndFatTotal()
+      console.log(this.foodCardForm)
+      this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
+      console.log(this.map);
+     }
+
+  
+
+
+    onSaveSnack3(){
+      this.analyzeChoAndFatSnack3();
+      this.analyzeChoAndFatTotal()
+      console.log(this.foodCardForm)
+      this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
+      console.log(this.map);
+     }
+
+
+
+    onSaveOthers(){
+      this.analyzeChoAndFatOthers();
+      this.analyzeChoAndFatTotal()
+      console.log(this.foodCardForm)
+      this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
+      console.log(this.map);
+     }
+
+    
+
+    
 
     
 
@@ -210,7 +296,7 @@ removeItemSnack(i){
     this.ResetLunch();
   }
   
-  AddLDinner(){
+  AddDinner(){
     console.log(this.foodCardForm)
     let number = this.anArrayDinner.length + 1
     let currentFood = {
@@ -227,9 +313,9 @@ removeItemSnack(i){
     this.ResetDinner();
   }
 
-  AddSnack(){
+  AddSnack1(){
     console.log(this.foodCardForm)
-    let number = this.anArraySnack.length + 1
+    let number = this.anArraySnack1.length + 1
     let currentFood = {
       food_name: this.foodCardForm.controls['food_name'].value,
       category:this.foodCardForm.controls['category'].value,
@@ -238,31 +324,69 @@ removeItemSnack(i){
       cho: this.foodCardForm.controls['cho'].value,
       fat: this.foodCardForm.controls['fat'].value,
     }
-    this.anArraySnack.push(currentFood);
-    this.analyzeChoAndFatSnack();
+    this.anArraySnack1.push(currentFood);
+    this.analyzeChoAndFatSnack1();
     this.analyzeChoAndFatTotal()
-    this.ResetSnack();
+    this.ResetSnack1();
+  }
+  
+
+  AddSnack2(){
+    console.log(this.foodCardForm)
+    let number = this.anArraySnack2.length + 1
+    let currentFood = {
+      food_name: this.foodCardForm.controls['food_name'].value,
+      category:this.foodCardForm.controls['category'].value,
+      unit: this.foodCardForm.controls['unit'].value,
+      qty: this.foodCardForm.controls['qty'].value,
+      cho: this.foodCardForm.controls['cho'].value,
+      fat: this.foodCardForm.controls['fat'].value,
+    }
+    this.anArraySnack2.push(currentFood);
+    this.analyzeChoAndFatSnack2();
+    this.analyzeChoAndFatTotal()
+    this.ResetSnack2();
   }
 
 
-  ResetLunch(){
-    this.foodCardForm = new FormGroup({
-      food_name: new FormControl(''),
-      category: new FormControl(''),
-      unit: new FormControl(''),
-      qty: new FormControl(''),
-      cho: new FormControl(''),
-      fat: new FormControl(''),
-    });
-    this.mainForm = this.formBuilder.group({
-      food_name: [''],
-      category:[''],
-      unit: [''],
-      qty: [''],
-      cho: [''],
-      fat: [''],
-    })
-   }
+  AddSnack3(){
+    console.log(this.foodCardForm)
+    let number = this.anArraySnack3.length + 1
+    let currentFood = {
+      food_name: this.foodCardForm.controls['food_name'].value,
+      category:this.foodCardForm.controls['category'].value,
+      unit: this.foodCardForm.controls['unit'].value,
+      qty: this.foodCardForm.controls['qty'].value,
+      cho: this.foodCardForm.controls['cho'].value,
+      fat: this.foodCardForm.controls['fat'].value,
+    }
+    this.anArraySnack3.push(currentFood);
+    this.analyzeChoAndFatSnack3();
+    this.analyzeChoAndFatTotal()
+    this.ResetSnack3();
+  }
+
+  AddOthers(){
+    console.log(this.foodCardForm)
+    let number = this.anArrayOthers.length + 1
+    let currentFood = {
+      food_name: this.foodCardForm.controls['food_name'].value,
+      category:this.foodCardForm.controls['category'].value,
+      unit: this.foodCardForm.controls['unit'].value,
+      qty: this.foodCardForm.controls['qty'].value,
+      cho: this.foodCardForm.controls['cho'].value,
+      fat: this.foodCardForm.controls['fat'].value,
+    }
+    this.anArrayOthers.push(currentFood);
+    this.analyzeChoAndFatOthers();
+    this.analyzeChoAndFatTotal()
+    this.ResetOthers();
+  }
+
+
+
+
+
   
    ResetBreakfast(){
     this.foodCardForm = new FormGroup({
@@ -283,7 +407,8 @@ removeItemSnack(i){
     })
    }
 
-   ResetSnack(){
+
+   ResetLunch(){
     this.foodCardForm = new FormGroup({
       food_name: new FormControl(''),
       category: new FormControl(''),
@@ -301,7 +426,6 @@ removeItemSnack(i){
       fat: [''],
     })
    }
-
 
    ResetDinner(){
     this.foodCardForm = new FormGroup({
@@ -321,6 +445,94 @@ removeItemSnack(i){
       fat: [''],
     })
    }
+
+
+   ResetSnack1(){
+    this.foodCardForm = new FormGroup({
+      food_name: new FormControl(''),
+      category: new FormControl(''),
+      unit: new FormControl(''),
+      qty: new FormControl(''),
+      cho: new FormControl(''),
+      fat: new FormControl(''),
+    });
+    this.mainForm = this.formBuilder.group({
+      food_name: [''],
+      category:[''],
+      unit: [''],
+      qty: [''],
+      cho: [''],
+      fat: [''],
+    })
+   }
+
+   ResetSnack2(){
+    this.foodCardForm = new FormGroup({
+      food_name: new FormControl(''),
+      category: new FormControl(''),
+      unit: new FormControl(''),
+      qty: new FormControl(''),
+      cho: new FormControl(''),
+      fat: new FormControl(''),
+    });
+    this.mainForm = this.formBuilder.group({
+      food_name: [''],
+      category:[''],
+      unit: [''],
+      qty: [''],
+      cho: [''],
+      fat: [''],
+    })
+   }
+
+   ResetSnack3(){
+    this.foodCardForm = new FormGroup({
+      food_name: new FormControl(''),
+      category: new FormControl(''),
+      unit: new FormControl(''),
+      qty: new FormControl(''),
+      cho: new FormControl(''),
+      fat: new FormControl(''),
+    });
+    this.mainForm = this.formBuilder.group({
+      food_name: [''],
+      category:[''],
+      unit: [''],
+      qty: [''],
+      cho: [''],
+      fat: [''],
+    })
+   }
+
+   ResetOthers(){
+    this.foodCardForm = new FormGroup({
+      food_name: new FormControl(''),
+      category: new FormControl(''),
+      unit: new FormControl(''),
+      qty: new FormControl(''),
+      cho: new FormControl(''),
+      fat: new FormControl(''),
+    });
+    this.mainForm = this.formBuilder.group({
+      food_name: [''],
+      category:[''],
+      unit: [''],
+      qty: [''],
+      cho: [''],
+      fat: [''],
+    })
+   }
+
+
+
+
+
+
+   
+   
+
+
+
 
 
 
@@ -424,21 +636,51 @@ removeItemSnack(i){
         });
         }
 
-        analyzeChoAndFatSnack(){
-      this.curChoSnack = 0;
-      this.curFatSnack = 0;
-        this.anArraySnack.forEach(element => {
-          this.curChoSnack = this.curChoSnack + Number(element.cho);
-          this.curFatSnack = this.curFatSnack + Number(element.fat);
+        analyzeChoAndFatSnack1(){
+      this.curChoSnack1 = 0;
+      this.curFatSnack1 = 0;
+        this.anArraySnack1.forEach(element => {
+          this.curChoSnack1 = this.curChoSnack1 + Number(element.cho);
+          this.curFatSnack1 = this.curFatSnack1 + Number(element.fat);
         });
         }
+
+      
+        analyzeChoAndFatSnack2(){
+          this.curChoSnack2 = 0;
+          this.curFatSnack2 = 0;
+            this.anArraySnack2.forEach(element => {
+              this.curChoSnack2 = this.curChoSnack2 + Number(element.cho);
+              this.curFatSnack2 = this.curFatSnack2 + Number(element.fat);
+            });
+            }
+
+        analyzeChoAndFatSnack3(){
+          this.curChoSnack3 = 0;
+          this.curFatSnack3 = 0;
+            this.anArraySnack3.forEach(element => {
+              this.curChoSnack3 = this.curChoSnack3 + Number(element.cho);
+              this.curFatSnack3 = this.curFatSnack3 + Number(element.fat);
+            });
+            }
+    
+        analyzeChoAndFatOthers(){
+          this.curChoOthers = 0;
+          this.curFatOthers = 0;
+            this.anArrayOthers.forEach(element => {
+              this.curChoOthers = this.curChoOthers + Number(element.cho);
+              this.curFatOthers = this.curFatOthers + Number(element.fat);
+            });
+            }
+        
 
 
         analyzeChoAndFatTotal(){
           this.curChoTotal = 0;
           this.curFatTotal = 0;
-          this.curChoTotal=this.curChoBreakfast+this.curChoLunch+this.curFatDinner+this.curFatSnack;
-          this.curFatTotal=this.curFatBreakfast+this.curFatLunch+this.curFatDinner+this.curFatSnack;
+          this.curChoTotal=this.curChoBreakfast+this.curChoLunch+this.curChoDinner+this.curChoSnack1+this.curChoSnack2+this.curChoSnack3+this.curChoOthers;
+          this.curFatTotal=this.curFatBreakfast+this.curFatLunch+this.curFatDinner+this.curFatSnack1+this.curFatSnack2+this.curFatSnack3+this.curFatOthers;
+        
         }
 
 
