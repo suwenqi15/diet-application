@@ -560,6 +560,20 @@ removeItemOthers(i){
 
     storeToDatabase(){
       // need to loop through these four array, and add line by line.
+     this.db.addFood(
+        this.myDate,
+        this.mainForm.value.category,
+        this.mainForm.value.food_name,
+        this.mainForm.value.unit,
+        this.mainForm.value.qty,
+        this.mainForm.value.cho,
+        this.mainForm.value.fat
+      ).then((res) => {
+  
+      })
+
+
+
     }
 
    // section for database
