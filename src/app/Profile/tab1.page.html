@@ -1,5 +1,6 @@
 
-  <ion-header>
+
+<ion-header>
     <ion-toolbar>
       
       <ion-title>Profile</ion-title>
@@ -10,8 +11,9 @@
 
 
     </ion-toolbar>
-  </ion-header>
-  <ion-content>
+  </ion-header> 
+
+<ion-content ng-if="staticMode" >
   
   <ion-item lines="none">
     <ion-label>Patient ID</ion-label><ion-label>03</ion-label>
@@ -40,7 +42,7 @@
   <ion-item lines="none">
     <ion-label>Fat Benchmark</ion-label><ion-label>10</ion-label>
   </ion-item>
+
+  <ion-button  (click)="updateProfile()" size = "small" class = "center" color="primary">updateProfile</ion-button>
   </ion-content>
-  
-  
 

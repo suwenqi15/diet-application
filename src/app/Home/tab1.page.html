@@ -45,41 +45,87 @@
 
 
 
+
+    
+  <!-- section of Breakfast start -->
  <div [hidden]="type !='breakfast'">
 
 
+<!-- <app-card> </app-card> -->
 
 
+  <ion-list>
+    <form [formGroup]="mainForm" (ngSubmit)="storeDataBreakfast()">
+    <ion-card *ngFor="let att of anArrayBreakfast; let i=index" >  
+      <ion-item-sliding >
+        <ion-item-options  side="end">
+        <ion-button color = "danger" (click)="removeItemBreakfast(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button>
+      </ion-item-options>
+        <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
+        <ion-item  lines="none">
+        <ion-label class="label"> Food Name</ion-label>
+        <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder={{att.food_name}} ></ion-input> 
 
+      </ion-item>
+    
+      <ion-item lines="none">
+        <ion-label class="label">Unit</ion-label>
+        <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="{{att.unit}}" ></ion-input>
+        
+        <ion-label class="unique">Qty</ion-label>
+        <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="{{att.qty}}"></ion-input>
+       
+      </ion-item>
+      <ion-item lines="none" >
+        
+        <ion-label class="label">CHO</ion-label>
+        <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="{{att.cho}}"></ion-input>
+        <ion-label class="label">Fat</ion-label>
+        <ion-input formControlName = "fat" type="text" required class = "right" placeholder="{{att.fat}}"></ion-input>
+      </ion-item>
+    </ion-item-sliding>
+  
+    </ion-card>
+  </form >
+</ion-list>
+
+  
 <ion-list>
-  <form [formGroup]="mainForm" (ngSubmit)="storeData()">
-  <ion-card *ngFor="let att of anArray; let i=index" >  
+  <form [formGroup]="foodCardForm" (ngSubmit)="onSaveBreakfast()">
+  <ion-card >  
     <ion-item-sliding >
       <ion-item-options  side="end">
-      <ion-button color = "danger" (click)="removeItem(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button>
+      <!-- <ion-button color = "danger" (click)="removeItem(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button> -->
     </ion-item-options>
-      <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
       <ion-item  lines="none">
-      <ion-label class="label"> {{att.food_name}}</ion-label>
-      <ion-input  formControlName = "food_name" type="text" required class = "right" >{{att.food_name}}</ion-input>
-
+      <ion-label class="label"> Food Name</ion-label>
+ 
+      <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder=" Enter" formControlName="food_name"></ion-input>
     </ion-item>
-  
     <ion-item lines="none">
       <ion-label class="label">Unit</ion-label>
-      <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="Enter" ></ion-input>
-      
-      <ion-label class="unique">Qty</ion-label>
-      <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="Enter"></ion-input>
-     
+      <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="Enter" formControlName="unit"></ion-input>
     </ion-item>
+
+    <ion-item lines="none">
+      <ion-label class="unique">Quantity</ion-label>
+      <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="Enter" formControlName="qty"></ion-input>
+    </ion-item>
+
+
     <ion-item lines="none" >
-      
       <ion-label class="label">CHO</ion-label>
-      <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="Enter"></ion-input>
-      <ion-label class="label">Fat</ion-label>
-      <ion-input formControlName = "fat" type="text" required class = "right" placeholder="Enter"></ion-input>
+      <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="Enter" formControlName="cho"></ion-input>
+
     </ion-item>
+
+    <ion-item lines="none">
+      <ion-label class="label">Fat</ion-label>
+      <ion-input formControlName = "fat" type="text" required class = "right" placeholder="Enter" formControlName="fat"></ion-input>
+    </ion-item>
+
+
+    <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
   </ion-item-sliding>
 
   </ion-card>
@@ -88,51 +134,46 @@
 </form >
 
 </ion-list>
-<ion-button  (click)="Add()" size = "small" class = "center" color="primary">Add Card </ion-button>
+
+
+<ion-button  (click)="AddBreakfast()" size = "small" class = "center" color="primary">Add Card </ion-button>
+<ion-button  (click)="storeToDatabase()" size = "small" class = "center" color="primary">Store to database</ion-button>
 
 
 <ion-list>
   <ion-item>
     <ion-label class = "label">Breakfast CHO Sum</ion-label>
-    <ion-input  class = "right" placeholder={{sum1}} ></ion-input>
+    <ion-input  class = "right" placeholder={{curChoBreakfast}} ></ion-input>
   </ion-item>
-  </ion-list>
-
+</ion-list>
   <ion-list>
     <ion-item>
       <ion-label class = "label">Breakfast Fat Sum</ion-label>
-      <ion-input   class = "right" placeholder={{sum2}} >  </ion-input>
+      <ion-input   class = "right" placeholder={{curFatBreakfast}}></ion-input>
     </ion-item>
-    </ion-list>
-
-      
+    </ion-list>  
 <ion-list>
   <ion-item>
     <ion-label class = "label">Daily CHO Sum</ion-label>
-    <ion-input  class = "right" placeholder="Enter" ></ion-input>
+    <ion-input  class = "right" placeholder={{curChoTotal}} ></ion-input>
   </ion-item>
   </ion-list>
-
   <ion-list>
     <ion-item>
       <ion-label class = "label">Daily Fat Sum</ion-label>
-      <ion-input  class = "right" placeholder="Enter" ></ion-input>
+      <ion-input  class = "right" placeholder={{curFatTotal}} ></ion-input>
     </ion-item>
     </ion-list>
-
   </div>
 
 
   <ion-card>
-
     <ion-item lines="inset" *ngFor="let data of Data">
       <ion-label>
-
         <h5 >Date:{{myDate}}</h5>
         <h5>CHO:{{data.cho}}</h5>
         <h5>Fat:{{data.fat}}</h5>
       </ion-label>
-
       <div class="item-note" item-end>     
         <ion-icon name="trash" style="zoom:2.0" (click)="deleteFood(data.id)"></ion-icon>
       </div>
@@ -141,37 +182,94 @@
 
 
 
+  <!-- section of Breakfast end -->
+
+
+
+
+
+
+  
+  <!-- section of lunch start -->
   <div [hidden]="type !='lunch'">
 
 
+    <!-- <app-card> </app-card> -->
+    
+    
+      <ion-list>
+        <form [formGroup]="mainForm" (ngSubmit)="storeData()">
+        <ion-card *ngFor="let att of anArrayLunch; let i=index" >  
+          <ion-item-sliding >
+            <ion-item-options  side="end">
+            <ion-button color = "danger" (click)="removeItemLunch(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button>
+          </ion-item-options>
+            <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
+            <ion-item  lines="none">
+            <ion-label class="label"> Food Name</ion-label>
+            <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder={{att.food_name}} ></ion-input> 
+    
+          </ion-item>
+        
+          <ion-item lines="none">
+            <ion-label class="label">Unit</ion-label>
+            <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="{{att.unit}}" ></ion-input>
+            
+            <ion-label class="unique">Qty</ion-label>
+            <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="{{att.qty}}"></ion-input>
+           
+          </ion-item>
+          <ion-item lines="none" >
+            
+            <ion-label class="label">CHO</ion-label>
+            <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="{{att.cho}}"></ion-input>
+            <ion-label class="label">Fat</ion-label>
+            <ion-input formControlName = "fat" type="text" required class = "right" placeholder="{{att.fat}}"></ion-input>
+          </ion-item>
+        </ion-item-sliding>
+      
+        </ion-card>
+      </form >
+    </ion-list>
+    
+      
     <ion-list>
-      <form [formGroup]="mainForm" (ngSubmit)="storeData()">
-      <ion-card *ngFor="let att of anArray; let i=index" >  
+      <form [formGroup]="foodCardForm" (ngSubmit)="onSaveLunch()">
+        <!-- <ion-card *ngFor="let att of anArray; let i=index" >   -->
+      <ion-card >  
         <ion-item-sliding >
           <ion-item-options  side="end">
-          <ion-button color = "danger" (click)="removeItem(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button>
+          <!-- <ion-button color = "danger" (click)="removeItem(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button> -->
         </ion-item-options>
-          <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
           <ion-item  lines="none">
           <ion-label class="label"> Food Name</ion-label>
-          <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder="Enter" ></ion-input>
+     
+          <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder=" Enter" formControlName="food_name"></ion-input>
         </ion-item>
-      
         <ion-item lines="none">
           <ion-label class="label">Unit</ion-label>
-          <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="Enter" ></ion-input>
-          
-          <ion-label class="unique">Qty</ion-label>
-          <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="Enter"></ion-input>
-         
+          <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="Enter" formControlName="unit"></ion-input>
         </ion-item>
+    
+        <ion-item lines="none">
+          <ion-label class="unique">Quantity</ion-label>
+          <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="Enter" formControlName="qty"></ion-input>
+        </ion-item>
+    
+    
         <ion-item lines="none" >
-          
           <ion-label class="label">CHO</ion-label>
-          <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="Enter"></ion-input>
-          <ion-label class="label">Fat</ion-label>
-          <ion-input formControlName = "fat" type="text" required class = "right" placeholder="Enter"></ion-input>
+          <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="Enter" formControlName="cho"></ion-input>
+    
         </ion-item>
+    
+        <ion-item lines="none">
+          <ion-label class="label">Fat</ion-label>
+          <ion-input formControlName = "fat" type="text" required class = "right" placeholder="Enter" formControlName="fat"></ion-input>
+        </ion-item>
+    
+    
+        <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
       </ion-item-sliding>
     
       </ion-card>
@@ -180,42 +278,334 @@
     </form >
     
     </ion-list>
-    <ion-button  (click)="Add()" size = "small" class = "center" color="primary">Add Card </ion-button>
     
-   
+    
+    <ion-button  (click)="AddLunch()" size = "small" class = "center" color="primary">Add Card </ion-button>
+    <ion-button  (click)="storeToDatabase()" size = "small" class = "center" color="primary">Store to database</ion-button>
+    
+    
+
     <ion-list>
       <ion-item>
         <ion-label class = "label">Lunch CHO Sum</ion-label>
-        <ion-input  class = "right" placeholder={{sum3}} ></ion-input>
+        <ion-input  class = "right" placeholder={{curChoLunch}} ></ion-input>
       </ion-item>
-      </ion-list>
-
+    </ion-list>
       <ion-list>
         <ion-item>
           <ion-label class = "label">Lunch Fat Sum</ion-label>
-          <ion-input  class = "right" placeholder={{sum4}} ></ion-input>
+          <ion-input   class = "right" placeholder={{curFatLunch}}></ion-input>
         </ion-item>
-        </ion-list>
-
-          
+        </ion-list>  
     <ion-list>
       <ion-item>
         <ion-label class = "label">Daily CHO Sum</ion-label>
-        <ion-input  class = "right" placeholder="Enter" ></ion-input>
+        <ion-input  class = "right" placeholder={{curChoTotal}} ></ion-input>
       </ion-item>
       </ion-list>
-
       <ion-list>
         <ion-item>
           <ion-label class = "label">Daily Fat Sum</ion-label>
-          <ion-input  class = "right" placeholder="Enter" ></ion-input>
+          <ion-input  class = "right" placeholder={{curFatTotal}} ></ion-input>
         </ion-item>
         </ion-list>
-    
       </div>
     
     
-      <div [hidden]="type !='eveningmeal'">
+      <ion-card>
+        <ion-item lines="inset" *ngFor="let data of Data">
+          <ion-label>
+            <h5 >Date:{{myDate}}</h5>
+            <h5>CHO:{{data.cho}}</h5>
+            <h5>Fat:{{data.fat}}</h5>
+          </ion-label>
+          <div class="item-note" item-end>     
+            <ion-icon name="trash" style="zoom:2.0" (click)="deleteFood(data.id)"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-card>  
+    
+    
+    
+      <!-- section of lunch end -->
+    
+
+
+ <!-- section of dinner start -->
+ <div [hidden]="type !='eveningmeal'">
+
+
+  <!-- <app-card> </app-card> -->
+  
+  
+    <ion-list>
+      <form [formGroup]="mainForm" (ngSubmit)="storeDataDinner()">
+      <ion-card *ngFor="let att of anArrayDinner; let i=index" >  
+        <ion-item-sliding >
+          <ion-item-options  side="end">
+          <ion-button color = "danger" (click)="removeItemDinner(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button>
+        </ion-item-options>
+          <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
+          <ion-item  lines="none">
+          <ion-label class="label"> Food Name</ion-label>
+          <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder={{att.food_name}} ></ion-input> 
+  
+        </ion-item>
+      
+        <ion-item lines="none">
+          <ion-label class="label">Unit</ion-label>
+          <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="{{att.unit}}" ></ion-input>
+          
+          <ion-label class="unique">Qty</ion-label>
+          <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="{{att.qty}}"></ion-input>
+         
+        </ion-item>
+        <ion-item lines="none" >
+          
+          <ion-label class="label">CHO</ion-label>
+          <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="{{att.cho}}"></ion-input>
+          <ion-label class="label">Fat</ion-label>
+          <ion-input formControlName = "fat" type="text" required class = "right" placeholder="{{att.fat}}"></ion-input>
+        </ion-item>
+      </ion-item-sliding>
+    
+      </ion-card>
+    </form >
+  </ion-list>
+  
+    
+  <ion-list>
+    <form [formGroup]="foodCardForm" (ngSubmit)="onSaveDinner()">
+    <ion-card >  
+      <ion-item-sliding >
+        <ion-item-options  side="end">
+      </ion-item-options>
+        <ion-item  lines="none">
+        <ion-label class="label"> Food Name</ion-label>
+   
+        <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder=" Enter" formControlName="food_name"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label class="label">Unit</ion-label>
+        <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="Enter" formControlName="unit"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label class="unique">Quantity</ion-label>
+        <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="Enter" formControlName="qty"></ion-input>
+      </ion-item>
+  
+  
+      <ion-item lines="none" >
+        <ion-label class="label">CHO</ion-label>
+        <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="Enter" formControlName="cho"></ion-input>
+  
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label class="label">Fat</ion-label>
+        <ion-input formControlName = "fat" type="text" required class = "right" placeholder="Enter" formControlName="fat"></ion-input>
+      </ion-item>
+  
+  
+      <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
+    </ion-item-sliding>
+  
+    </ion-card>
+    
+    
+  </form >
+  
+  </ion-list>
+  
+  
+  <ion-button  (click)="AddDinner()" size = "small" class = "center" color="primary">Add Card </ion-button>
+  <ion-button  (click)="storeToDatabase()" size = "small" class = "center" color="primary">Store to database</ion-button>
+  
+  
+  <ion-list>
+    <ion-item>
+      <ion-label class = "label">Dinner CHO Sum</ion-label>
+      <ion-input  class = "right" placeholder={{curChoBreakfast}} ></ion-input>
+    </ion-item>
+  </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label class = "label">Dinner Fat Sum</ion-label>
+        <ion-input   class = "right" placeholder={{curFatBreakfast}}></ion-input>
+      </ion-item>
+      </ion-list>  
+  <ion-list>
+    <ion-item>
+      <ion-label class = "label">Daily CHO Sum</ion-label>
+      <ion-input  class = "right" placeholder={{curChoTotal}} ></ion-input>
+    </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label class = "label">Daily Fat Sum</ion-label>
+        <ion-input  class = "right" placeholder={{curFatTotal}} ></ion-input>
+      </ion-item>
+      </ion-list>
+    </div>
+  
+  
+    <ion-card>
+      <ion-item lines="inset" *ngFor="let data of Data">
+        <ion-label>
+          <h5 >Date:{{myDate}}</h5>
+          <h5>CHO:{{data.cho}}</h5>
+          <h5>Fat:{{data.fat}}</h5>
+        </ion-label>
+        <div class="item-note" item-end>     
+          <ion-icon name="trash" style="zoom:2.0" (click)="deleteFood(data.id)"></ion-icon>
+        </div>
+      </ion-item>
+    </ion-card>  
+  
+  
+    <!-- section of dinner end -->
+  
+  
+
+    
+  <!-- section of Snack start -->
+  <div [hidden]="type !='snack1'">
+
+
+    <!-- <app-card> </app-card> -->
+    
+    
+      <ion-list>
+        <form [formGroup]="mainForm" (ngSubmit)="storeDataSnack()">
+        <ion-card *ngFor="let att of anArrayDinner; let i=index" >  
+          <ion-item-sliding >
+            <ion-item-options  side="end">
+            <ion-button color = "danger" (click)="removeItemSnack(i)"><ion-icon name="trash"></ion-icon> Delete</ion-button>
+          </ion-item-options>
+            <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
+            <ion-item  lines="none">
+            <ion-label class="label"> Food Name</ion-label>
+            <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder={{att.food_name}} ></ion-input> 
+    
+          </ion-item>
+        
+          <ion-item lines="none">
+            <ion-label class="label">Unit</ion-label>
+            <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="{{att.unit}}" ></ion-input>
+            
+            <ion-label class="unique">Qty</ion-label>
+            <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="{{att.qty}}"></ion-input>
+           
+          </ion-item>
+          <ion-item lines="none" >
+            
+            <ion-label class="label">CHO</ion-label>
+            <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="{{att.cho}}"></ion-input>
+            <ion-label class="label">Fat</ion-label>
+            <ion-input formControlName = "fat" type="text" required class = "right" placeholder="{{att.fat}}"></ion-input>
+          </ion-item>
+        </ion-item-sliding>
+      
+        </ion-card>
+      </form >
+    </ion-list>
+    
+      
+    <ion-list>
+      <form [formGroup]="foodCardForm" (ngSubmit)="onSaveSnack()">
+      <ion-card >  
+        <ion-item-sliding >
+          <ion-item-options  side="end">
+        </ion-item-options>
+          <ion-item  lines="none">
+          <ion-label class="label"> Food Name</ion-label>
+     
+          <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder=" Enter" formControlName="food_name"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="label">Unit</ion-label>
+          <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="Enter" formControlName="unit"></ion-input>
+        </ion-item>
+    
+        <ion-item lines="none">
+          <ion-label class="unique">Quantity</ion-label>
+          <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="Enter" formControlName="qty"></ion-input>
+        </ion-item>
+    
+    
+        <ion-item lines="none" >
+          <ion-label class="label">CHO</ion-label>
+          <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="Enter" formControlName="cho"></ion-input>
+    
+        </ion-item>
+    
+        <ion-item lines="none">
+          <ion-label class="label">Fat</ion-label>
+          <ion-input formControlName = "fat" type="text" required class = "right" placeholder="Enter" formControlName="fat"></ion-input>
+        </ion-item>
+    
+    
+        <ion-button class = "savebutton" type="submit" color="tertiary"  shape="block" expand="block">Save</ion-button>
+      </ion-item-sliding>
+    
+      </ion-card>
+      
+      
+    </form >
+    
+    </ion-list>
+    
+    
+    <ion-button  (click)="AddSnack()" size = "small" class = "center" color="primary">Add Card </ion-button>
+    <ion-button  (click)="storeToDatabase()" size = "small" class = "center" color="primary">Store to database</ion-button>
+    
+    
+    <ion-list>
+      <ion-item>
+        <ion-label class = "label">Snack CHO Sum</ion-label>
+        <ion-input  class = "right" placeholder={{curChoSnack}} ></ion-input>
+      </ion-item>
+    </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label class = "label">snack Fat Sum</ion-label>
+          <ion-input   class = "right" placeholder={{curFatSnack}}}></ion-input>
+        </ion-item>
+        </ion-list>  
+    <ion-list>
+      <ion-item>
+        <ion-label class = "label">Daily CHO Sum</ion-label>
+        <ion-input  class = "right" placeholder={{curChoTotal}} ></ion-input>
+      </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label class = "label">Daily Fat Sum</ion-label>
+          <ion-input  class = "right" placeholder={{curFatTotal}} ></ion-input>
+        </ion-item>
+        </ion-list>
+      </div>
+    
+    
+      <ion-card>
+        <ion-item lines="inset" *ngFor="let data of Data">
+          <ion-label>
+            <h5 >Date:{{myDate}}</h5>
+            <h5>CHO:{{data.cho}}</h5>
+            <h5>Fat:{{data.fat}}</h5>
+          </ion-label>
+          <div class="item-note" item-end>     
+            <ion-icon name="trash" style="zoom:2.0" (click)="deleteFood(data.id)"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-card>  
+    
+    
+      <!-- section of snack end -->
+    
+    
+<!--       
 
 
         <ion-list>
@@ -287,9 +677,9 @@
             
     
         
-          </div>
+          </div> -->
         
-          <div [hidden]="type !='snack1'">
+          <!-- <div [hidden]="type !='snack1'">
 
 
             <ion-list>
@@ -362,9 +752,9 @@
                 </ion-item>
               </ion-list>
               
-              </div>
+              </div> -->
             
-            
+<!--             
               <div [hidden]="type !='snack2'">
 
 
@@ -437,9 +827,9 @@
                   </ion-item>
                 </ion-list>
         
-                  </div>
+                  </div> -->
                 
-                  <div [hidden]="type !='snack3'">
+                  <!-- <div [hidden]="type !='snack3'">
 
 
                     <ion-list>
@@ -513,10 +903,10 @@
               
             
                     
-                      </div>
+                      </div> -->
                     
 
-                      <div [hidden]="type !='others'">
+                      <!-- <div [hidden]="type !='others'">
 
 
                         <ion-list>
@@ -589,9 +979,9 @@
                         </ion-list>
                 
                         
-                          </div>
+                          </div> -->
                         
-                        
+                     
                     
 
 

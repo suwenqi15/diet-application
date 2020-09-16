@@ -7,7 +7,7 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'    
 })
 
 export class DbService {
@@ -23,7 +23,7 @@ export class DbService {
   ) {
     this.platform.ready().then(() => {
       this.sqlite.create({
-        name: 'positronx_db.db',
+        name: 'dailyfoodtable.db',
         location: 'default'
       })
       .then((db: SQLiteObject) => {
@@ -31,6 +31,7 @@ export class DbService {
           this.getFakeData();
       });
     });
+    console.log("we just create a db!!!")
   }
 
   dbState() {
@@ -58,6 +59,7 @@ export class DbService {
 
   // Get list
   getFoods(){
+    console.log("!!!!!!!!!we just get foods from db!!!")
     return this.storage.executeSql('SELECT * FROM dailyfoodtable', []).then(res => {
       let items: Food[] = [];
       if (res.rows.length > 0) {
