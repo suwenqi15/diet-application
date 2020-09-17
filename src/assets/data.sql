@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS accounttable(
 );
 
 CREATE TABLE IF NOT EXISTS dailyfoodtable(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY  AUTOINCREMENT, 
+        uuid TEXT  UNIQUE,
         timeframe TEXT,
         category TEXT,
         food_name TEXT, 

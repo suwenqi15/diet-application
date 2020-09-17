@@ -1,5 +1,6 @@
 export class Food {
     id: number;
+    uuid: string;
     timeframe: string;
     category: string;
     food_name: string;

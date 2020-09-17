@@ -31,7 +31,6 @@ export class DbService {
           this.getFakeData();
       });
     });
-    console.log("we just create a db!!!")
   }
 
   dbState() {
@@ -59,13 +58,13 @@ export class DbService {
 
   // Get list
   getFoods(){
-    console.log("!!!!!!!!!we just get foods from db!!!")
     return this.storage.executeSql('SELECT * FROM dailyfoodtable', []).then(res => {
       let items: Food[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) { 
           items.push({ 
             id: res.rows.item(i).id,
+            uuid: res.rows.item(i).uuid,
             timeframe: res.rows.item(i).timeframe,  
             category: res.rows.item(i).category,
             food_name: res.rows.item(i).food_name,  
@@ -81,9 +80,9 @@ export class DbService {
   }
 
   // Add
-  addFood(timeframe, category, food_name, unit,qty,cho,fat) {
-    let data = [timeframe, category, food_name, unit,qty,cho,fat];
-    return this.storage.executeSql('INSERT INTO dailyfoodtable (timeframe, category, food_name, unit,qty,cho,fat) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
+  addFood(uuid, timeframe, category, food_name, unit,qty,cho,fat) {
+    let data = [ uuid, timeframe, category, food_name, unit,qty,cho,fat];
+    return this.storage.executeSql('INSERT INTO dailyfoodtable (uuid, timeframe, category, food_name, unit,qty,cho,fat) VALUES (?, ?, ?, ?, ?, ?, ?,?)', data)
     .then(res => {
       this.getFoods();
       
@@ -95,6 +94,7 @@ export class DbService {
     return this.storage.executeSql('SELECT * FROM dailyfoodtable WHERE id = ?', [id]).then(res => { 
       return {
         id: res.rows.item(0).id,
+        uuid: res.rows.item(0).uuid,
         timeframe: res.rows.item(0).timeframe,
         category: res.rows.item(0).category,
         food_name: res.rows.item(0).food_name,  
@@ -116,10 +116,14 @@ export class DbService {
   }
 
   // Delete
-  deleteFood(id) {
-    return this.storage.executeSql('DELETE FROM dailyfoodtable WHERE id = ?', [id])
+  deleteFood(uuid) {
+    var q =  "DELETE FROM dailyfoodtable WHERE uuid = " +'"' + uuid + '"';
+    console.log("the query is : " + q);
+    return this.storage.executeSql(q)
     .then(_ => {
       this.getFoods();
     });
   }
+
+
 }
