@@ -69,8 +69,11 @@
     
       <ion-item lines="none">
         <ion-label class="label">Unit</ion-label>
+        <ion-select value="gram" okText="Okay" cancelText="Dismiss">
+          <ion-select-option formControlName = "unit" type="text" required class = "left1" >Gram</ion-select-option>
+          <ion-select-option formControlName = "unit" type="text" required class = "left1">Tbsl</ion-select-option>
+        </ion-select>
         <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="{{att.unit}}" ></ion-input>
-        
         <ion-label class="unique">Qty</ion-label>
         <ion-input  formControlName = "qty"  type="text" required class = "right" placeholder="{{att.qty}}"></ion-input>
        

@@ -28,7 +28,7 @@ export class DbService {
       })
       .then((db: SQLiteObject) => {
           this.storage = db;
-          this.getFakeData();
+          this.getData();
       });
     });
   }
@@ -42,7 +42,7 @@ export class DbService {
   }
 
     // Render fake data
-    getFakeData() {
+    getData() {
       this.httpClient.get(
         'assets/data.sql', 
         {responseType: 'text'}

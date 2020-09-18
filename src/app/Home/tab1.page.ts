@@ -4,8 +4,7 @@ import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { DbService } from './../services/db.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from "@angular/router";
-import {AutoCompleteService} from 'ionic4-auto-complete';
-import { Papa } from 'ngx-papaparse';
+
 
 @Component({
   selector: 'app-tab1',
