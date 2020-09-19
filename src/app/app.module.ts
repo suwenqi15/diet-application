@@ -20,6 +20,8 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { FoodCardComponent } from './foodcard/foodcard.component';
 
+import 'chartjs-plugin-zoom';
+
 @NgModule({
   declarations: [AppComponent
   ],

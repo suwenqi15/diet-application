@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { Food } from './food';
+import { Personal } from './food';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 
 @Injectable({
-  providedIn: 'root'    
+  providedIn: 'root'
 })
-
-export class DbService {
+export class PersonalService {
   private storage: SQLiteObject;
-  foodsList = new BehaviorSubject([]);
+  personalsList = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -23,7 +22,7 @@ export class DbService {
   ) {
     this.platform.ready().then(() => {
       this.sqlite.create({
-        name: 'dailyfoodtable.db',
+        name: 'personalfoodtable.db',
         location: 'default'
       })
       .then((db: SQLiteObject) => {
@@ -37,8 +36,8 @@ export class DbService {
     return this.isDbReady.asObservable();
   }
  
-  fetchFoods(): Observable<Food[]> {
-    return this.foodsList.asObservable();
+  fetchPersonals(): Observable<Personal[]> {
+    return this.personalsList.asObservable();
   }
 
   // Render data
@@ -49,7 +48,7 @@ export class DbService {
     ).subscribe(data => {
       this.sqlPorter.importSqlToDb(this.storage, data)
         .then(_ => {
-          this.getFoods();
+          this.getPersonals();
           this.isDbReady.next(true);
         })
         .catch(error => console.error(error));
@@ -57,9 +56,9 @@ export class DbService {
   }
 
   // Get list
-  getFoods(){
-    return this.storage.executeSql('SELECT * FROM dailyfoodtable', []).then(res => {
-      let items: Food[] = [];
+  getPersonals(){
+    return this.storage.executeSql('SELECT * FROM personalfoodtable', []).then(res => {
+      let items: Personal[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) { 
           items.push({ 
@@ -75,23 +74,23 @@ export class DbService {
            });
         }
       }
-      this.foodsList.next(items);
+      this.personalsList.next(items);
     });
   }
 
   // Add
-  addFood(uuid, timeframe, category, food_name, unit,qty,cho,fat) {
+  addPersonal(uuid, timeframe, category, food_name, unit,qty,cho,fat) {
     let data = [ uuid, timeframe, category, food_name, unit,qty,cho,fat];
-    return this.storage.executeSql('INSERT INTO dailyfoodtable (uuid, timeframe, category, food_name, unit,qty,cho,fat) VALUES (?, ?, ?, ?, ?, ?, ?,?)', data)
+    return this.storage.executeSql('INSERT INTO personalfoodtable (uuid, timeframe, category, food_name, unit,qty,cho,fat) VALUES (?, ?, ?, ?, ?, ?, ?,?)', data)
     .then(res => {
-      this.getFoods();
+      this.getPersonals();
       
     });
   }
  
   // Get single object
-  getFood(id): Promise<Food> {
-    return this.storage.executeSql('SELECT * FROM dailyfoodtable WHERE id = ?', [id]).then(res => { 
+  getPersonal(id): Promise<Personal> {
+    return this.storage.executeSql('SELECT * FROM personalfoodtable WHERE id = ?', [id]).then(res => { 
       return {
         id: res.rows.item(0).id,
         uuid: res.rows.item(0).uuid,
@@ -108,24 +107,13 @@ export class DbService {
 
 
   // Delete
-  deleteFood(uuid) {
+  deletePersonal(uuid) {
     var q =  "DELETE FROM dailyfoodtable WHERE uuid = " +'"' + uuid + '"';
     console.log("the query is : " + q);
     return this.storage.executeSql(q)
     .then(_ => {
-      this.getFoods();
+      this.getPersonals();
     });
   }
-
-    // Update
-  // updateFood(id, food: Food) {
-  //   let data = [food.timeframe, food.category, food.food_name, food.unit,food.qty,food.cho,food.fat ];
-  //   return this.storage.executeSql(`UPDATE dailyfoodtable SET, timeframe=?, food_name = ?, unit = ? qty = ?, cho=?, fat=? WHERE id = ${id}`, data)
-  //   .then(data => {
-  //     this.getFoods();
-  //   })
-  // }
-
-
 
 }

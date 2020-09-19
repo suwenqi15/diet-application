@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Papa } from 'ngx-papaparse';
-import { Platform } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ChartDataSets } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+ 
+
 
 @Component({
   selector: 'app-tab1',
@@ -11,74 +11,101 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  page = 0;
+  totalPages = 10;
+  resultsCount = 10;
+  data = [];
+  sortKey = null;
+  sortDirection = 0;
+
+  // Chart Data
+  chartData: ChartDataSets[] = [
+    { data: [], label: 'Daily CHO' },
+    { data: [], label: 'Daily Fat' },
+    { data: [], label: 'CHO Benchmark' },
+    { data: [], label: 'Fat Benchmark' }
+  ];
+  chartLabels: Label[];
+
+ // Options
+ chartOptions = {
+  responsive: true,
+  title: {
+    display: true,
+    text: 'Historic Stock price'
+  },
+  pan: {
+    enabled: true,
+    mode: 'xy'
+  },
+  zoom: {
+    enabled: true,
+    mode: 'xy'
+  }
+};
+chartColors: Color[] = [
+  {
+    borderColor: '#000000',
+    backgroundColor: '#ff00ff'
+  }
+];
+chartType = 'line';
+showLegend = false;
+// For search
+stock = 'AAPL';
+
+
+  //default segment
   selectTabs='table view'
-  csvData: any[] = [];
-  headerRow: any[] = [];
-  
+
 
   constructor(
-    private http: HttpClient,
-    private papa: Papa,
-    private plt: Platform,
-    private file: File,
-    private socialSharing: SocialSharing
-  ) {
+    private http: HttpClient) 
+    {this.loadtableData();
+    this.getchartData();
+  }
 
-    this.loadCSV();
-  }
- 
-  private loadCSV() {
-    this.http
-      .get('./assets/food.csv', {
-        responseType: 'text'
-      })
-      .subscribe(
-        data => this.extractData(data),
-        err => console.log('something went wrong: ', err)
-      );
-  }
- 
-  private extractData(res) {
-    let csvData = res || '';
- 
-    this.papa.parse(csvData, {
-      complete: parsedData => {
-        this.headerRow = parsedData.data.splice(0, 1)[0];
-        this.csvData = parsedData.data;
-      }
-    });
-  }
- 
-  exportCSV() {
-    let csv = this.papa.unparse({
-      fields: this.headerRow,
-      data: this.csvData
-    });
- 
-    if (this.plt.is('cordova')) {
-      this.file.writeFile(this.file.dataDirectory, 'data.csv', csv, {replace: true}).then( res => {
-        this.socialSharing.share(null, null, res.nativeURL, null).then(e =>{
-          // Success
-        }).catch(e =>{
-          console.log('Share failed:', e)
-        });
-      }, err => {
-        console.log('Error: ', err);
-      });
- 
-    } else {
-      // Dummy implementation for Desktop download purpose
-      var blob = new Blob([csv]);
-      var a = window.document.createElement('a');
-      a.href = window.URL.createObjectURL(blob);
-      a.download = 'food.csv';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+
+  getchartData() {
+    this.http.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${this.stock}?from=2018-03-12&to=2019-03-12`).subscribe(res => {
+    const history = res['historical'];
+
+    this.chartLabels = [];
+    this.chartData[0].data = [];
+
+    for (let entry of history) {
+      this.chartLabels.push(entry.date);
+      this.chartData[0].data.push(entry['close']);
     }
+
+  });
+}
+
+  loadtableData() {
+    this.http
+      .get(`https://randomuser.me/api/?page=${this.page}&results=${this.resultsCount}`)
+      .subscribe(res => {
+        this.data = res['results'];
+        
+      });
+  }
+  nextPage() {
+    this.page++;
+    this.loadtableData();
   }
  
-  trackByFn(index: any, item: any) {
-    return index;
+  prevPage() {
+    this.page--;
+    this.loadtableData();
+  }
+ 
+  goFirst() {
+    this.page = 0;
+    this.loadtableData();
+  }
+ 
+  goLast() {
+    this.page = this.totalPages - 1;
+    this.loadtableData();
   }
 }
