@@ -51,11 +51,14 @@
  <div [hidden]="type !='breakfast'">
 
 
+
 <!-- <app-card> </app-card> -->
 
 
   <ion-list>
     
+
+    <!-- loop and print out what has already in the list -->
     <ion-card *ngFor="let att of anArrayBreakfast; let i=index" >  
       <ion-item-sliding >
         <ion-item-options  side="end">
@@ -91,17 +94,28 @@
 </ion-list>
 
   
+<!-- take in what user eat -->
 <ion-list>
   <form [formGroup]="foodCardForm" (ngSubmit)="onSaveBreakfast()">
   <ion-card >  
     <ion-item-sliding >
       <ion-item-options  side="end">
     </ion-item-options>
-      <ion-item  lines="none">
+
+
+      <!-- <ion-item  lines="none"> -->
+      <ion-label class="label"> Search Food Name</ion-label>
+        <ion-searchbar (ionInput) = "filterJsonData($event)"></ion-searchbar> 
+        <ion-list>
+      <ion-item (click) = "selectVal(object.name)" *ngFor = "let object of jsonData"> 
+        {{object.name}}
+      </ion-item>
+    </ion-list>
+
       <ion-label class="label"> Food Name</ion-label>
  
       <ion-input  formControlName = "food_name" type="text" required class = "right" placeholder=" Enter" ></ion-input>
-    </ion-item>
+    <!-- </ion-item> -->
     <ion-item lines="none">
       <ion-label class="label">Unit</ion-label>
       <ion-input  formControlName = "unit" type="text" required class = "left1" placeholder="Enter" ></ion-input>
@@ -114,9 +128,9 @@
     <ion-item lines="none" >
       
       <ion-label class="label">CHO</ion-label>
-      <ion-input formControlName = "cho"  type="text" required class = "left2" placeholder="Enter"></ion-input>
+      <ion-input #choiput value = "custom" formControlName = "cho"  type="text" required class = "left2" placeholder="Enter 00"></ion-input>
       <ion-label class="label">Fat</ion-label>
-      <ion-input formControlName = "fat" type="text" required class = "right" placeholder="Enter"></ion-input>
+      <ion-input id = "fatinput" formControlName = "fat" type="text" required class = "right" placeholder="Enter"></ion-input>
     </ion-item>
 
   </ion-item-sliding>

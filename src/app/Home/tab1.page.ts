@@ -1,9 +1,10 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit, ViewChild} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { DbService } from './../services/db.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from "@angular/router";
+import { variable } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -11,8 +12,9 @@ import { Router } from "@angular/router";
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page { 
 
+export class Tab1Page { 
+  @ViewChild("choinput") choinput;
   mainForm: FormGroup;
   Data: any[] = []
   public curChoBreakfast=0;
@@ -43,8 +45,12 @@ export class Tab1Page {
 
    myDate = new Date().toISOString().split('T')[0];
    type: string
+
+  jsonData:any=[];
  
-foodCardForm = new FormGroup({
+
+
+  foodCardForm = new FormGroup({
   food_name: new FormControl(''),
   category: new FormControl(''),
   unit: new FormControl(''),
@@ -54,6 +60,17 @@ foodCardForm = new FormGroup({
 });
 
 
+// pod useful command: 🍓
+// https://github.com/ionic-team/capacitor/issues/1676
+// https://github.com/ionic-team/capacitor/issues/1755
+// sudo npm install -g cordova ionic
+// /Users/kaiyanliu/Desktop/diet-application/ios/App
+// kaiyanliu@Kaiyans-iMac App % ls
+// App		App.xcodeproj	App.xcworkspace	Podfile		Podfile.lock	Pods		public
+// kaiyanliu@Kaiyans-iMac App % 
+
+
+
 public map:  Map<string, FormGroup> = new Map();
   constructor(
     
@@ -61,12 +78,60 @@ public map:  Map<string, FormGroup> = new Map();
     private db: DbService,
     public formBuilder: FormBuilder,
     private toast: ToastController,
-    private router: Router    
+    private router: Router,    
+    public viewCtrl: ViewController
+
     )
    { 
+    //this.initializeJsonData();
     this.type = 'breakfast';
 
   }
+
+
+  initializeJsonData()
+  {
+     this.jsonData = [
+        {
+            "name": "apple",
+            "cho": "1001"
+        },
+        {
+          "name": "banana",
+          "cho": "1003"
+        },
+       {
+        "name": "waffle",
+        "cho": "1002"
+       },
+     ]
+  }
+
+  filterJsonData(ev:any){
+    //filt out json food methed with user input.
+    this.initializeJsonData();
+    console.log("call bu dao");
+    console.log("log yi neinei"  + this.choinput);
+    document.getElementById("choinput").focus();
+    const val = ev.target.value;
+    if(val && val.trim() != ''){
+      this.jsonData = this.jsonData.filter((object) => {
+        return (object.name.toLowerCase().indexOf(val.toLowerCase())>-1);
+      })
+    }
+
+  }
+
+  onclickJson(){
+    // after choosing one food, auto complete other field cho/fat.
+    let cho = 9;
+    let fat = 10;
+    console.log("find the cho is " + cho + " and fat is " + fat);
+    document.getElementById("choinput").setAttribute('value', "" + cho);
+    document.getElementById("fatinput").innerText = "" + fat;
+  }
+
+
   // segmentc change method
   segmentChanged(ev: any) {}
 
