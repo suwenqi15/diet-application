@@ -5,7 +5,7 @@
       
       <ion-title>Profile</ion-title>
       
-        <ion-fab-button size = small class = custom-icon>
+        <ion-fab-button (click)="updateProfile()" size = small class = custom-icon>
           <ion-icon name="create-outline"></ion-icon>
         </ion-fab-button>
 
@@ -43,6 +43,5 @@
     <ion-label>Fat Benchmark</ion-label><ion-label>10</ion-label>
   </ion-item>
 
-  <ion-button  (click)="updateProfile()" size = "small" class = "center" color="primary">updateProfile</ion-button>
   </ion-content>
 
