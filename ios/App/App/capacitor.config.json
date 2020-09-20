@@ -1,5 +1,5 @@
 {
-  "appId": "nhs.gosh.bobi2",
+  "appId": "nhs.gosh.bobi3",
   "appName": "Diet",
   "bundledWebRuntime": false,
   "npmClient": "npm",
@@ -21,6 +21,7 @@
     }
   },
   "server": {
-    "url": "http://localhost:8100"
+    "url": "http://localhost:8100",
+    "originalUrl": "http://localhost:8100"
   }
 }

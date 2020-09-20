@@ -565,131 +565,130 @@ removeItemOthers(i){
 
     storeToDatabase(){
 
-      // for (var val of this.anArrayBreakfast) {
-      //   let uniqueKey = this.myDate + "_Breakfast_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-      //   this.db.addFood(
-      //     uniqueKey,
-      //     this.myDate,
-      //      "BreakFast",
-      //      val.food_name,
-      //      val.unit,
-      //      val.qty,
-      //      val.cho,
-      //      val.fat
-      //   ).then((res) => {
+      for (var val of this.anArrayBreakfast) {
+        let uniqueKey = this.myDate + "_Breakfast_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+        this.db.addFood(
+          uniqueKey,
+          this.myDate,
+           "BreakFast",
+           val.food_name,
+           val.unit,
+           val.qty,
+           val.cho,
+           val.fat
+        ).then((res) => {
     
-      //   })
-      // }
+        })
+      }
 
-      // for (var val of this.anArrayLunch) {
-      //   let uniqueKey = this.myDate + "_Lunch_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-      //   this.db.addFood(
-      //     uniqueKey,
-      //     this.myDate,
-      //      "Lunch",
-      //      val.food_name,
-      //      val.unit,
-      //      val.qty,
-      //      val.cho,
-      //      val.fat
-      //   ).then((res) => {
+      for (var val of this.anArrayLunch) {
+        let uniqueKey = this.myDate + "_Lunch_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+        this.db.addFood(
+          uniqueKey,
+          this.myDate,
+           "Lunch",
+           val.food_name,
+           val.unit,
+           val.qty,
+           val.cho,
+           val.fat
+        ).then((res) => {
     
-      //   })
-      // }
+        })
+      }
 
-      // for (var val of this.anArrayDinner) {
-      //   let uniqueKey = this.myDate + "_Dinner_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-      //   this.db.addFood(
-      //     uniqueKey,
-      //     this.myDate,
-      //      "Dinner",
-      //      val.food_name,
-      //      val.unit,
-      //      val.qty,
-      //      val.cho,
-      //      val.fat
-      //   ).then((res) => {
+      for (var val of this.anArrayDinner) {
+        let uniqueKey = this.myDate + "_Dinner_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+        this.db.addFood(
+          uniqueKey,
+          this.myDate,
+           "Dinner",
+           val.food_name,
+           val.unit,
+           val.qty,
+           val.cho,
+           val.fat
+        ).then((res) => {
     
-      //   })
-      // }
+        })
+      }
 
-      // for (var val of this.anArraySnack1) {
-      //   let uniqueKey = this.myDate + "_Snack1_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-      //   this.db.addFood(
-      //     uniqueKey,
-      //     this.myDate,
-      //      "Snack1",
-      //      val.food_name,
-      //      val.unit,
-      //      val.qty,
-      //      val.cho,
-      //      val.fat
-      //   ).then((res) => {
+      for (var val of this.anArraySnack1) {
+        let uniqueKey = this.myDate + "_Snack1_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+        this.db.addFood(
+          uniqueKey,
+          this.myDate,
+           "Snack1",
+           val.food_name,
+           val.unit,
+           val.qty,
+           val.cho,
+           val.fat
+        ).then((res) => {
     
-      //   })
-      // }
+        })
+      }
 
 
-      // for (var val of this.anArraySnack2) {
-      //   let uniqueKey = this.myDate + "_Snack2_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-      //   this.db.addFood(
-      //     uniqueKey,
-      //     this.myDate,
-      //      "Snack2",
-      //      val.food_name,
-      //      val.unit,
-      //      val.qty,
-      //      val.cho,
-      //      val.fat
-      //   ).then((res) => {
+      for (var val of this.anArraySnack2) {
+        let uniqueKey = this.myDate + "_Snack2_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+        this.db.addFood(
+          uniqueKey,
+          this.myDate,
+           "Snack2",
+           val.food_name,
+           val.unit,
+           val.qty,
+           val.cho,
+           val.fat
+        ).then((res) => {
     
-      //   })
-      // }
+        })
+      }
 
 
-      // for (var val of this.anArraySnack3) {
-      //   let uniqueKey = this.myDate + "_Snack3_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-      //   this.db.addFood(
-      //     uniqueKey,
-      //     this.myDate,
-      //      "Snack3",
-      //      val.food_name,
-      //      val.unit,
-      //      val.qty,
-      //      val.cho,
-      //      val.fat
-      //   ).then((res) => {
+      for (var val of this.anArraySnack3) {
+        let uniqueKey = this.myDate + "_Snack3_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+        this.db.addFood(
+          uniqueKey,
+          this.myDate,
+           "Snack3",
+           val.food_name,
+           val.unit,
+           val.qty,
+           val.cho,
+           val.fat
+        ).then((res) => {
     
-      //   })
-      // }
+        })
+      }
 
-      // for (var val of this.anArrayOthers) {
-      //   let uniqueKey = this.myDate + "_Others_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-      //   this.db.addFood(
-      //     uniqueKey,
-      //     this.myDate,
-      //      "Others",
-      //      val.food_name,
-      //      val.unit,
-      //      val.qty,
-      //      val.cho,
-      //      val.fat
-      //   ).then((res) => {
+      for (var val of this.anArrayOthers) {
+        let uniqueKey = this.myDate + "_Others_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+        this.db.addFood(
+          uniqueKey,
+          this.myDate,
+           "Others",
+           val.food_name,
+           val.unit,
+           val.qty,
+           val.cho,
+           val.fat
+        ).then((res) => {
     
-      //   })
-      // }
+        })
+      }
 
 
       
-      // this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
-      console.log("kyl: home page calling export")
+      this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
       this.dailyrecorddb.exportJson();
 
     }

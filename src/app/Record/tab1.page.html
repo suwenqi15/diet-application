@@ -27,6 +27,9 @@
 
 
   <!-- pagination -->
+
+  <ion-button  (click)="loaddb()" size = "small" class = "center" color="primary">Load From Database</ion-button>
+
   <ion-grid>
   <ion-row class="header-row">
    
@@ -45,9 +48,7 @@
 
 
 
-<ion-button  (click)="loaddb()" size = "small" class = "center" color="primary">Load From Database</ion-button>
 
-<p>"You are my cinderella" </p>
 
   <ion-row *ngFor="let row of data; let i = index;" class="data-row" >
     
@@ -176,14 +177,14 @@
     </ion-button>
   </ion-item> -->
 
-  <canvas baseChart 
+  <!-- <canvas baseChart 
   [datasets]="chartData" 
   [labels]="chartLabels" 
   [options]="chartOptions" 
   [colors]="chartColors"
   [legend]="showLegend" 
   [chartType]="chartType">
-  </canvas>
+  </canvas> 
 
 </div>
 
