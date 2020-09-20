@@ -82,11 +82,13 @@ export class DbService {
   // Add
   addFood(uuid, timeframe, category, food_name, unit,qty,cho,fat) {
     let data = [ uuid, timeframe, category, food_name, unit,qty,cho,fat];
+
+  
     return this.storage.executeSql('INSERT INTO dailyfoodtable (uuid, timeframe, category, food_name, unit,qty,cho,fat) VALUES (?, ?, ?, ?, ?, ?, ?,?)', data)
     .then(res => {
       this.getFoods();
-      
     });
+
   }
  
   // Get single object
@@ -110,7 +112,6 @@ export class DbService {
   // Delete
   deleteFood(uuid) {
     var q =  "DELETE FROM dailyfoodtable WHERE uuid = " +'"' + uuid + '"';
-    console.log("the query is : " + q);
     return this.storage.executeSql(q)
     .then(_ => {
       this.getFoods();

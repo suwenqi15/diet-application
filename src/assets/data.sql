@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS dailyfoodtable(
 
 CREATE TABLE IF NOT EXISTS dailyrecordtable(
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    timeframe TEXT, 
+    timeframe TEXT UNIQUE, 
     dailycho REAL,
     dailyfat REAL 
 );

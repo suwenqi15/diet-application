@@ -109,7 +109,6 @@ export class PersonalService {
   // Delete
   deletePersonal(uuid) {
     var q =  "DELETE FROM dailyfoodtable WHERE uuid = " +'"' + uuid + '"';
-    console.log("the query is : " + q);
     return this.storage.executeSql(q)
     .then(_ => {
       this.getPersonals();

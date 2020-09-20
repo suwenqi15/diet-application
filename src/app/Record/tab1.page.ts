@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { EmailValidator } from '@angular/forms';
+import { RecordService } from '../services/record.service';
+import { DbService } from '../services/db.service';
  
 
 
@@ -11,6 +14,7 @@ import { Color, Label } from 'ng2-charts';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+
   page = 0;
   totalPages = 10;
   resultsCount = 10;
@@ -57,11 +61,13 @@ stock = 'AAPL';
 
   //default segment
   selectTabs='table view'
-
-
   constructor(
-    private http: HttpClient) 
-    {this.loadtableData();
+    private dailyrecorddb: RecordService,
+    private http: HttpClient
+  
+    ) 
+
+    {this.loadtableData1();
     this.getchartData();
   }
 
@@ -81,13 +87,38 @@ stock = 'AAPL';
   });
 }
 
+
+loaddb(){
+  
+  //this.dailyrecorddb.exportJson();
+
+ // this.dailyrecorddb.exportJson();
+  //console.log("kyl: read result json in service in tab1"+ this.dailyrecorddb.resultJson);
+  //dbData[row [ Email,name?.first .last]]
+
+  // + this.dailyrecorddb.resultJson);
+
+}
+
+
+  //mokey to do!!! table functions
   loadtableData() {
+    
+  
+    //dbData[row [ Email,name?.first .last]]
+
+
+  }
+
+
+  loadtableData1() {
     this.http
       .get(`https://randomuser.me/api/?page=${this.page}&results=${this.resultsCount}`)
       .subscribe(res => {
         this.data = res['results'];
         
       });
+     
   }
   nextPage() {
     this.page++;

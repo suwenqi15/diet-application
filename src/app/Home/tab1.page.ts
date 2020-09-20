@@ -2,9 +2,11 @@ import { Component, Input, OnInit, ViewChild} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { DbService } from './../services/db.service';
+
 import { ToastController } from '@ionic/angular';
 import { Router } from "@angular/router";
 import { variable } from '@angular/compiler/src/output/output_ast';
+import { RecordService } from '../services/record.service';
 
 
 @Component({
@@ -76,10 +78,10 @@ public map:  Map<string, FormGroup> = new Map();
     
     private http: HttpClient,
     private db: DbService,
+    private dailyrecorddb: RecordService,
     public formBuilder: FormBuilder,
     private toast: ToastController,
     private router: Router,    
-    public viewCtrl: ViewController
 
     )
    { 
@@ -110,8 +112,6 @@ public map:  Map<string, FormGroup> = new Map();
   filterJsonData(ev:any){
     //filt out json food methed with user input.
     this.initializeJsonData();
-    console.log("call bu dao");
-    console.log("log yi neinei"  + this.choinput);
     document.getElementById("choinput").focus();
     const val = ev.target.value;
     if(val && val.trim() != ''){
@@ -124,11 +124,10 @@ public map:  Map<string, FormGroup> = new Map();
 
   onclickJson(){
     // after choosing one food, auto complete other field cho/fat.
-    let cho = 9;
-    let fat = 10;
-    console.log("find the cho is " + cho + " and fat is " + fat);
-    document.getElementById("choinput").setAttribute('value', "" + cho);
-    document.getElementById("fatinput").innerText = "" + fat;
+    // let cho = 9;
+    // let fat = 10;
+    // document.getElementById("choinput").setAttribute('value', "" + cho);
+    // document.getElementById("fatinput").innerText = "" + fat;
   }
 
 
@@ -138,8 +137,6 @@ public map:  Map<string, FormGroup> = new Map();
    // section for remove and delete 
 
    removeItemBreakfast(i){
-     console.log("i is" + i)
-     console.log("this.anArrayBreakfast is" + this.anArrayBreakfast)
     for(let j = 0; j < this.anArrayBreakfast.length; j++) {
 
       if(j == i){
@@ -148,105 +145,80 @@ public map:  Map<string, FormGroup> = new Map();
         this.dbdeleteFood(j_uuid);
       }
     }
-    console.log("this.anArrayBreakfast is" + this.anArrayBreakfast)
     this.analyzeChoAndFatBreakfast();
     this.analyzeChoAndFatTotal()
   }
 
   removeItemLunch(i){
-    console.log("i is" + i)
-    console.log("this.anArrayLunch is" + this.anArrayLunch)
    for(let j = 0; j < this.anArrayLunch.length; j++) {
      if(j == i){
       let j_uuid = this.myDate + "_Lunch_" + (String)(this.anArrayLunch[j].food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
       this.anArrayLunch.splice(j, 1);
-      console.log("why jjames" + j_uuid);
       this.dbdeleteFood(j_uuid);
     
      }
    }
-   console.log("this.anArrayLunch is" + this.anArrayLunch)
    this.analyzeChoAndFatLunch();
    this.analyzeChoAndFatTotal()
  }
 
  removeItemDinner(i){
-  console.log("i is" + i)
-  console.log("this.anArrayDinner is" + this.anArrayDinner)
  for(let j = 0; j < this.anArrayDinner.length; j++) {
     if(j == i){
     let j_uuid = this.myDate + "_Dinner_" + (String)(this.anArrayDinner[j].food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
     this.anArrayDinner.splice(j, 1);
-    console.log("why jjames" + j_uuid);
     this.dbdeleteFood(j_uuid);
    }
  }
- console.log("this.anArrayDinner is" + this.anArrayDinner)
  this.analyzeChoAndFatDinner();
  this.analyzeChoAndFatTotal()
 }
 
 removeItemSnack1(i){
-  console.log("i is" + i)
-  console.log("this.anArraySnack1 is" + this.anArraySnack1)
  for(let j = 0; j < this.anArraySnack1.length; j++) {
   if(j == i){
     let j_uuid = this.myDate + "_Snack1_" + (String)(this.anArraySnack1[j].food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
     this.anArraySnack1.splice(j, 1);
-    console.log("why jjames" + j_uuid);
     this.dbdeleteFood(j_uuid);
    }
  }
- console.log("this.anArranArraySnack1 is" + this.anArraySnack1)
  this.analyzeChoAndFatSnack1();
  this.analyzeChoAndFatTotal()
 }
 
 removeItemSnack2(i){
-  console.log("i is" + i)
-  console.log("this.anArraySnack2 is" + this.anArraySnack2)
  for(let j = 0; j < this.anArraySnack2.length; j++) {
   if(j == i){
     let j_uuid = this.myDate + "_Snack2_" + (String)(this.anArraySnack2[j].food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
     this.anArraySnack2.splice(j, 1);
-    console.log("why jjames" + j_uuid);
     this.dbdeleteFood(j_uuid);
    }
    
  }
- console.log("this.anArranArraySnack2 is" + this.anArraySnack2)
  this.analyzeChoAndFatSnack2();
  this.analyzeChoAndFatTotal()
 }
 
 removeItemSnack3(i){
-  console.log("i is" + i)
-  console.log("this.anArraySnack3 is" + this.anArraySnack3)
  for(let j = 0; j < this.anArraySnack3.length; j++) {
   if(j == i){
     let j_uuid = this.myDate + "_Snack3_" + (String)(this.anArraySnack3[j].food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
     this.anArraySnack3.splice(j, 1);
-    console.log("why jjames" + j_uuid);
     this.dbdeleteFood(j_uuid);
    }
  }
- console.log("this.anArranArraySnack3 is" + this.anArraySnack3)
  this.analyzeChoAndFatSnack3();
  this.analyzeChoAndFatTotal()
 }
 
 removeItemOthers(i){
-  console.log("i is" + i)
-  console.log("this.anArrayOthers is" + this.anArrayOthers)
  for(let j = 0; j < this.anArrayOthers.length; j++) {
   if(j == i){
     let j_uuid = this.myDate + "_Others_" + (String)(this.anArrayOthers[j].food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
     this.anArrayOthers.splice(j, 1);
-    console.log("why jjames" + j_uuid);
     this.dbdeleteFood(j_uuid);
    }
  }
- console.log("this.anArranArrayOthers is" + this.anArrayOthers)
  this.analyzeChoAndFatOthers();
  this.analyzeChoAndFatTotal()
 }
@@ -269,41 +241,36 @@ removeItemOthers(i){
     onSaveBreakfast(){
       this.analyzeChoAndFatBreakfast();
       this.analyzeChoAndFatTotal()
-      console.log(this.foodCardForm)
       this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-      console.log(this.map);
+  
     }
 
    onSaveLunch(){
    this.analyzeChoAndFatLunch();
    this.analyzeChoAndFatTotal()
-   console.log(this.foodCardForm)
    this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-   console.log(this.map);
+
   }
    onSaveDinner(){
    this.analyzeChoAndFatDinner();
    this.analyzeChoAndFatTotal()
-   console.log(this.foodCardForm)
    this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-   console.log(this.map);
+
   }
 
      onSaveSnack1(){
      this.analyzeChoAndFatSnack1();
      this.analyzeChoAndFatTotal()
-     console.log(this.foodCardForm)
      this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-     console.log(this.map);
+
     }
 
 
     onSaveSnack2(){
       this.analyzeChoAndFatSnack2();
       this.analyzeChoAndFatTotal()
-      console.log(this.foodCardForm)
       this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-      console.log(this.map);
+
      }
 
   
@@ -312,9 +279,7 @@ removeItemOthers(i){
     onSaveSnack3(){
       this.analyzeChoAndFatSnack3();
       this.analyzeChoAndFatTotal()
-      console.log(this.foodCardForm)
       this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-      console.log(this.map);
      }
 
 
@@ -322,9 +287,7 @@ removeItemOthers(i){
     onSaveOthers(){
       this.analyzeChoAndFatOthers();
       this.analyzeChoAndFatTotal()
-      console.log(this.foodCardForm)
       this.map[this.foodCardForm.controls['food_name'].value] = this.foodCardForm.value;
-      console.log(this.map);
      }
 
 
@@ -588,7 +551,6 @@ removeItemOthers(i){
           })
         }
       });
-      console.log("init" + this.db.dbState());
       this.mainForm = this.formBuilder.group({
         food_name: [''],
         category: [''],
@@ -603,132 +565,137 @@ removeItemOthers(i){
 
     storeToDatabase(){
 
-      for (var val of this.anArrayBreakfast) {
-        let uniqueKey = this.myDate + "_Breakfast_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-        this.db.addFood(
-          uniqueKey,
-          this.myDate,
-           "BreakFast",
-           val.food_name,
-           val.unit,
-           val.qty,
-           val.cho,
-           val.fat
-        ).then((res) => {
+      // for (var val of this.anArrayBreakfast) {
+      //   let uniqueKey = this.myDate + "_Breakfast_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+      //   this.db.addFood(
+      //     uniqueKey,
+      //     this.myDate,
+      //      "BreakFast",
+      //      val.food_name,
+      //      val.unit,
+      //      val.qty,
+      //      val.cho,
+      //      val.fat
+      //   ).then((res) => {
     
-        })
-      }
+      //   })
+      // }
 
-      for (var val of this.anArrayLunch) {
-        let uniqueKey = this.myDate + "_Lunch_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-        this.db.addFood(
-          uniqueKey,
-          this.myDate,
-           "Lunch",
-           val.food_name,
-           val.unit,
-           val.qty,
-           val.cho,
-           val.fat
-        ).then((res) => {
+      // for (var val of this.anArrayLunch) {
+      //   let uniqueKey = this.myDate + "_Lunch_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+      //   this.db.addFood(
+      //     uniqueKey,
+      //     this.myDate,
+      //      "Lunch",
+      //      val.food_name,
+      //      val.unit,
+      //      val.qty,
+      //      val.cho,
+      //      val.fat
+      //   ).then((res) => {
     
-        })
-      }
+      //   })
+      // }
 
-      for (var val of this.anArrayDinner) {
-        let uniqueKey = this.myDate + "_Dinner_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-        this.db.addFood(
-          uniqueKey,
-          this.myDate,
-           "Dinner",
-           val.food_name,
-           val.unit,
-           val.qty,
-           val.cho,
-           val.fat
-        ).then((res) => {
+      // for (var val of this.anArrayDinner) {
+      //   let uniqueKey = this.myDate + "_Dinner_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+      //   this.db.addFood(
+      //     uniqueKey,
+      //     this.myDate,
+      //      "Dinner",
+      //      val.food_name,
+      //      val.unit,
+      //      val.qty,
+      //      val.cho,
+      //      val.fat
+      //   ).then((res) => {
     
-        })
-      }
+      //   })
+      // }
 
-      for (var val of this.anArraySnack1) {
-        let uniqueKey = this.myDate + "_Snack1_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-        this.db.addFood(
-          uniqueKey,
-          this.myDate,
-           "Snack1",
-           val.food_name,
-           val.unit,
-           val.qty,
-           val.cho,
-           val.fat
-        ).then((res) => {
+      // for (var val of this.anArraySnack1) {
+      //   let uniqueKey = this.myDate + "_Snack1_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+      //   this.db.addFood(
+      //     uniqueKey,
+      //     this.myDate,
+      //      "Snack1",
+      //      val.food_name,
+      //      val.unit,
+      //      val.qty,
+      //      val.cho,
+      //      val.fat
+      //   ).then((res) => {
     
-        })
-      }
+      //   })
+      // }
 
 
-      for (var val of this.anArraySnack2) {
-        let uniqueKey = this.myDate + "_Snack2_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-        this.db.addFood(
-          uniqueKey,
-          this.myDate,
-           "Snack2",
-           val.food_name,
-           val.unit,
-           val.qty,
-           val.cho,
-           val.fat
-        ).then((res) => {
+      // for (var val of this.anArraySnack2) {
+      //   let uniqueKey = this.myDate + "_Snack2_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+      //   this.db.addFood(
+      //     uniqueKey,
+      //     this.myDate,
+      //      "Snack2",
+      //      val.food_name,
+      //      val.unit,
+      //      val.qty,
+      //      val.cho,
+      //      val.fat
+      //   ).then((res) => {
     
-        })
-      }
+      //   })
+      // }
 
 
-      for (var val of this.anArraySnack3) {
-        let uniqueKey = this.myDate + "_Snack3_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-        this.db.addFood(
-          uniqueKey,
-          this.myDate,
-           "Snack3",
-           val.food_name,
-           val.unit,
-           val.qty,
-           val.cho,
-           val.fat
-        ).then((res) => {
+      // for (var val of this.anArraySnack3) {
+      //   let uniqueKey = this.myDate + "_Snack3_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+      //   this.db.addFood(
+      //     uniqueKey,
+      //     this.myDate,
+      //      "Snack3",
+      //      val.food_name,
+      //      val.unit,
+      //      val.qty,
+      //      val.cho,
+      //      val.fat
+      //   ).then((res) => {
     
-        })
-      }
+      //   })
+      // }
 
-      for (var val of this.anArrayOthers) {
-        let uniqueKey = this.myDate + "_Others_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
-        //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
-        this.db.addFood(
-          uniqueKey,
-          this.myDate,
-           "Others",
-           val.food_name,
-           val.unit,
-           val.qty,
-           val.cho,
-           val.fat
-        ).then((res) => {
+      // for (var val of this.anArrayOthers) {
+      //   let uniqueKey = this.myDate + "_Others_" + (String)(val.food_name).toLowerCase().replace(/\-/g, " ").replace( /\s+/g, "") //remove spaces;
+      //   //this uniqueKey is generated with date, category and food type(all remove space and camelcase), which will be unique in sql as key.
+      //   this.db.addFood(
+      //     uniqueKey,
+      //     this.myDate,
+      //      "Others",
+      //      val.food_name,
+      //      val.unit,
+      //      val.qty,
+      //      val.cho,
+      //      val.fat
+      //   ).then((res) => {
     
-        })
-      }
+      //   })
+      // }
+
+
+      
+      // this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
+      console.log("kyl: home page calling export")
+      this.dailyrecorddb.exportJson();
 
     }
 
     // analyzing part:
     analyzeChoAndFatBreakfast(){
-      console.log("this.curCho is   " + this.curChoBreakfast);
       this.curChoBreakfast = 0;
       this.curFatBreakfast = 0;
         this.anArrayBreakfast.forEach(element => {
