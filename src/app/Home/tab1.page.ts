@@ -1,13 +1,11 @@
 import { Component, Input, OnInit, ViewChild} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { DbService } from './../services/db.service';
-
+import { Dailyfoodservice } from './../services/dailyfood.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from "@angular/router";
-import { variable } from '@angular/compiler/src/output/output_ast';
 import { RecordService } from '../services/record.service';
-
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-tab1',
@@ -76,8 +74,9 @@ export class Tab1Page {
 public map:  Map<string, FormGroup> = new Map();
   constructor(
     
+    private dbservice: DatabaseService, 
     private http: HttpClient,
-    private db: DbService,
+    private db: Dailyfoodservice,
     private dailyrecorddb: RecordService,
     public formBuilder: FormBuilder,
     private toast: ToastController,
@@ -122,6 +121,10 @@ public map:  Map<string, FormGroup> = new Map();
 
   }
 
+  selectVal(){
+   console.log("check")
+  }
+
   onclickJson(){
     // after choosing one food, auto complete other field cho/fat.
     // let cho = 9;
@@ -129,6 +132,9 @@ public map:  Map<string, FormGroup> = new Map();
     // document.getElementById("choinput").setAttribute('value', "" + cho);
     // document.getElementById("fatinput").innerText = "" + fat;
   }
+
+
+
 
 
   // segmentc change method
@@ -543,7 +549,7 @@ removeItemOthers(i){
    }
 
     ngOnInit() {
-      this.db.dbState().subscribe((res) => {
+      this.dbservice.dbState().subscribe((res) => {
         if(res){
           this.db.fetchFoods().subscribe(item => {
             this.Data = item
@@ -687,10 +693,7 @@ removeItemOthers(i){
       }
 
 
-      
-      this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
-      this.dailyrecorddb.exportJson();
-
+     this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
     }
 
     // analyzing part:

@@ -4,8 +4,9 @@ import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { EmailValidator } from '@angular/forms';
 import { RecordService } from '../services/record.service';
-import { DbService } from '../services/db.service';
- 
+import { DatabaseService } from '../services/database.service';
+
+
 
 
 @Component({
@@ -67,7 +68,7 @@ stock = 'AAPL';
   
     ) 
 
-    {this.loadtableData1();
+    {
     this.getchartData();
   }
 
@@ -88,38 +89,28 @@ stock = 'AAPL';
 }
 
 
-loaddb(){
-  
-  //this.dailyrecorddb.exportJson();
-
- // this.dailyrecorddb.exportJson();
-  //console.log("kyl: read result json in service in tab1"+ this.dailyrecorddb.resultJson);
-  //dbData[row [ Email,name?.first .last]]
-
-  // + this.dailyrecorddb.resultJson);
-
-}
 
 
-  //mokey to do!!! table functions
-  loadtableData() {
-    
-  
-    //dbData[row [ Email,name?.first .last]]
 
 
+  loadtableData(){
+    // this.dbservice.getRecords();
   }
+  
 
 
-  loadtableData1() {
-    this.http
-      .get(`https://randomuser.me/api/?page=${this.page}&results=${this.resultsCount}`)
-      .subscribe(res => {
-        this.data = res['results'];
+
+  // loadtableData1() {
+  //   this.http
+  //     .get(`https://randomuser.me/api/?page=${this.page}&results=${this.resultsCount}`)
+  //     .subscribe(res => {
+  //       this.data = res['results'];
         
-      });
+  //     });
      
-  }
+  // }
+
+
   nextPage() {
     this.page++;
     this.loadtableData();

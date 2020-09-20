@@ -1,48 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
 import { Record } from './food';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import { DatabaseService } from '../services/database.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordService {
-
-
-  private storage: SQLiteObject;
   recordsList = new BehaviorSubject([]);
-  private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public resultJson = [];
-
+  
   constructor(
-    private platform: Platform, 
-    private sqlite: SQLite, 
+    private dbservice: DatabaseService, 
     private httpClient: HttpClient,
-    private sqlPorter: SQLitePorter,
+    private sqlPorter: SQLitePorter
 
 
-  ) {
-
-    this.platform.ready().then(() => {
-      this.sqlite.create({
-        name: 'dailyrecordtable.db',
-        location: 'default'
-      })
-      .then((db: SQLiteObject) => {
-          this.storage = db;
-          this.getData();
-      });
-    });
-    
-   }
+  ) {}
 
 
-   dbState() {
-    return this.isDbReady.asObservable();
-  }
 
   fetchRecords(): Observable<Record[]> {
     return this.recordsList.asObservable();
@@ -54,10 +31,10 @@ export class RecordService {
       'assets/data.sql', 
       {responseType: 'text'}
     ).subscribe(data => {
-      this.sqlPorter.importSqlToDb(this.storage, data)
+      this.sqlPorter.importSqlToDb(this.dbservice.getdb(), data)
         .then(_ => {
           this.getRecords();
-          this.isDbReady.next(true);
+          this.dbservice.getDbReady().next(true);
         })
         .catch(error => console.error(error));
     });
@@ -66,7 +43,7 @@ export class RecordService {
 
 
   getRecords(){
-    return this.storage.executeSql('SELECT * FROM dailyrecordtable', []).then(res => {
+    return this.dbservice.getdb().executeSql('SELECT * FROM dailyrecordtable', []).then(res => {
       let items: Record[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) { 
@@ -76,6 +53,7 @@ export class RecordService {
             dailycho: res.rows.item(i).dailycho, 
             dailyfat: res.rows.item(i).dailyfat
            });
+           
         }
       }
       this.recordsList.next(items);
@@ -85,24 +63,30 @@ export class RecordService {
 
   addRecord( timeframe, dailycho, dailyfat) {
     let data = [ timeframe, dailycho,dailyfat];
-    return this.storage.executeSql('INSERT INTO dailyrecordtable (timeframe, dailycho, dailyfat ) VALUES (?, ?, ?)', data)
+    console.log('lol' + data)
+    return this.dbservice.getdb().executeSql('INSERT INTO dailyrecordtable (timeframe, dailycho, dailyfat ) VALUES (?, ?, ?)', data)
     .then(res => {
       this.getRecords();
       
     });
   }
 
+  
 
 
-  exportJson(){
-    console.log("kyl: exporting in service");
-    this.sqlPorter.exportDbToJson(this.storage).then(res=>{
-      console.log("kyl: read "+ res);
+
+  // exportJson(){
+  //   for (let entry of this.storage) {console.log(entry)};
+  //   this.sqlPorter.exportDbToJson(this.storage).then(res=>{
+
     //   console.log("kyl: read res result json in service"+ res);
     //  console.log("kyl: read result json in service"+ res.data.inserts.dailyrecordtable);
 
-    });
+    // });
+
   }
+  
+  
 
   //this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
 
@@ -110,4 +94,4 @@ export class RecordService {
 
 
 
-}
+

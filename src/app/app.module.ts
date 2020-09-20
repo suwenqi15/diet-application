@@ -21,6 +21,7 @@ import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { FoodCardComponent } from './foodcard/foodcard.component';
 
 import 'chartjs-plugin-zoom';
+import { DatabaseService } from './services/database.service';
 
 @NgModule({
   declarations: [AppComponent
@@ -38,7 +39,8 @@ import 'chartjs-plugin-zoom';
     File,
     SocialSharing, 
     SQLite,
-    SQLitePorter
+    SQLitePorter,
+    DatabaseService
   ],
   bootstrap: [AppComponent]
 })
