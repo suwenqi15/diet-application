@@ -69,7 +69,10 @@ stock = 'AAPL';
     ) 
 
     {
+<<<<<<< HEAD
     this.loadtableData();
+=======
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
     this.getchartData();
   }
 
@@ -94,15 +97,25 @@ stock = 'AAPL';
 
 
 
+<<<<<<< HEAD
       loadtableData(){
           console.log("hello");
           console.log('dddd' + this.dailyrecorddb.getRecords());
         }
+=======
+  loadtableData(){
+    // this.dbservice.getRecords();
+  }
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
   
 
 
 
+<<<<<<< HEAD
   // loadtableData() {
+=======
+  // loadtableData1() {
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
   //   this.http
   //     .get(`https://randomuser.me/api/?page=${this.page}&results=${this.resultsCount}`)
   //     .subscribe(res => {

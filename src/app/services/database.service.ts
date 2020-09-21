@@ -14,7 +14,11 @@ export class DatabaseService {
   constructor(
     private platform: Platform, 
     private sqlite: SQLite, 
+<<<<<<< HEAD
   ) {//initial local storage setup
+=======
+  ) {
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
     this.platform.ready().then(() => {
       this.sqlite.create({
         name: 'dietdata.db',

@@ -107,6 +107,10 @@ getSystem(id): Promise<System> {
 
 // }
 
+<<<<<<< HEAD
 }
+=======
+
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
 
 

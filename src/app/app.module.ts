@@ -24,6 +24,9 @@ import { AutoCompleteModule } from 'ionic4-auto-complete';
 import 'chartjs-plugin-zoom';
 import { DatabaseService } from './services/database.service';
 
+import 'chartjs-plugin-zoom';
+import { DatabaseService } from './services/database.service';
+
 @NgModule({
   declarations: [AppComponent
   ],
@@ -42,8 +45,12 @@ import { DatabaseService } from './services/database.service';
     SocialSharing, 
     SQLite,
     SQLitePorter,
+<<<<<<< HEAD
     DatabaseService, 
     
+=======
+    DatabaseService
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
   ],
   bootstrap: [AppComponent]
 })

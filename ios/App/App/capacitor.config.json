@@ -1,5 +1,5 @@
 {
-  "appId": "nhs.gosh.bobi2",
+  "appId": "nhs.gosh.bobi3",
   "appName": "Diet",
   "bundledWebRuntime": false,
   "npmClient": "npm",
@@ -19,5 +19,12 @@
       "SplashScreen": "screen",
       "SplashScreenDelay": "3000"
     }
+<<<<<<< HEAD
+=======
+  },
+  "server": {
+    "url": "http://localhost:8100",
+    "originalUrl": "http://localhost:8100"
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
   }
 }

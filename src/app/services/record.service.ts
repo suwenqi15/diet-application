@@ -42,6 +42,7 @@ export class RecordService {
 
 
 
+<<<<<<< HEAD
   async getRecords(){
     let result = await this.dbservice.getdb().executeSql('SELECT * FROM dailyrecordtable', []);
   
@@ -63,6 +64,24 @@ export class RecordService {
       console.log('zz' + items);
       return items;
   
+=======
+  getRecords(){
+    return this.dbservice.getdb().executeSql('SELECT * FROM dailyrecordtable', []).then(res => {
+      let items: Record[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) { 
+          items.push({ 
+            id: res.rows.item(i).id,
+            timeframe: res.rows.item(i).timeframe,  
+            dailycho: res.rows.item(i).dailycho, 
+            dailyfat: res.rows.item(i).dailyfat
+           });
+           
+        }
+      }
+      this.recordsList.next(items);
+    });
+>>>>>>> b71bb4e5a3537316666d4abcd6caac687482584c
   }
 
 
