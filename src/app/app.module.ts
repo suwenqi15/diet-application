@@ -15,10 +15,14 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
 
 
 import { HttpClientModule } from '@angular/common/http';
+import { Papa } from 'ngx-papaparse';
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
-import { FoodCardComponent } from './foodcard/foodcard.component';
+
+
+import 'chartjs-plugin-zoom';
+import { DatabaseService } from './services/database.service';
 
 @NgModule({
   declarations: [AppComponent
@@ -34,9 +38,12 @@ import { FoodCardComponent } from './foodcard/foodcard.component';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     File,
+    Papa,
     SocialSharing, 
     SQLite,
-    SQLitePorter
+    SQLitePorter,
+    DatabaseService, 
+    
   ],
   bootstrap: [AppComponent]
 })
