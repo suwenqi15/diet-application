@@ -9,23 +9,23 @@ const routes: Routes = [
     children: [
       {
         path: 'Home',
-        loadChildren: () => import('../Home/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../Home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'Record',
-        loadChildren: () => import('../Record/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../Record/record.module').then(m => m.RecordModule)
       },
       {
         path: 'Profile',
-        loadChildren: () => import('../Profile/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../Profile/profile.module').then(m => m.ProfileModule)
       },
       {
         path: 'Setting',
-        loadChildren: () => import('../Setting/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../Setting/setting.module').then(m => m.SettingPageModule)
       },
       {
         path: 'Information',
-        loadChildren: () => import('../Information/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../Information/information.module').then(m => m.InformationPageModule)
       },
       {
         path: '',

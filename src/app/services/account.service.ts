@@ -1,41 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
 import { Account } from './food';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import { DatabaseService } from '../services/database.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
-  private storage: SQLiteObject;
   accountsList = new BehaviorSubject([]);
-  private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
+ 
 
   constructor(
-    private platform: Platform, 
-    private sqlite: SQLite, 
+    private dbservice: DatabaseService, 
     private httpClient: HttpClient,
-    private sqlPorter: SQLitePorter,
-  ) {
-    this.platform.ready().then(() => {
-      this.sqlite.create({
-        name: 'accounttable.db',
-        location: 'default'
-      })
-      .then((db: SQLiteObject) => {
-          this.storage = db;
-          this.getData();
-      });
-    });
-  }
+    private sqlPorter: SQLitePorter
 
-  dbState() {
-    return this.isDbReady.asObservable();
-  }
+  ) {}
+
+ 
  
   fetchAccounts(): Observable<Account[]> {
     return this.accountsList.asObservable();
@@ -47,10 +32,10 @@ export class AccountService {
       'assets/data.sql', 
       {responseType: 'text'}
     ).subscribe(data => {
-      this.sqlPorter.importSqlToDb(this.storage, data)
+      this.sqlPorter.importSqlToDb(this.dbservice.getdb(), data)
         .then(_ => {
           this.getAccounts();
-          this.isDbReady.next(true);
+          this.dbservice.getDbReady().next(true);
         })
         .catch(error => console.error(error));
     });
@@ -58,7 +43,7 @@ export class AccountService {
 
   // Get list
   getAccounts(){
-    return this.storage.executeSql('SELECT * FROM accounttable', []).then(res => {
+    return this.dbservice.getdb().executeSql('SELECT * FROM accounttable', []).then(res => {
       let items: Account[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) { 
@@ -80,19 +65,9 @@ export class AccountService {
     });
   }
 
-  // Add
-  addAccount(id,  patientid, firstname, lastname, email,birthday,chobenchmark,fatbenchmark) {
-    let data = [ id, patientid, firstname, lastname, email,birthday,chobenchmark,fatbenchmark];
-    return this.storage.executeSql('INSERT INTO accounttable (patientid, firstname, lastname, email,birthday,chobenchmark,fatbenchmark) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
-    .then(res => {
-      this.getAccounts();
-      
-    });
-  }
- 
   // Get single object
   getAccount(id): Promise<Account> {
-    return this.storage.executeSql('SELECT * FROM accounttable WHERE id = ?', [id]).then(res => { 
+    return this.dbservice.getdb().executeSql('SELECT * FROM accounttable WHERE id = ?', [id]).then(res => { 
       return {
         id: res.rows.item(0).id,
         patientid: res.rows.item(0).patientid,  
@@ -107,26 +82,31 @@ export class AccountService {
     });
   }
 
+  // Add
+    addAccount(id,  patientid, firstname, lastname, email,birthday,chobenchmark,fatbenchmark) {
+      let data = [ id, patientid, firstname, lastname, email,birthday,chobenchmark,fatbenchmark];
+      return this.dbservice.getdb().executeSql('INSERT INTO accounttable (patientid, firstname, lastname, email,birthday,chobenchmark,fatbenchmark) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
+      .then(res => {
+        this.getAccounts();
+        
+      });
+    }
+   
 
-  Update
+  //Update
   updateAccounts(id, account: Account) {
     let data = [account.patientid, account.firstname, account.lastname, account.email,account.birthday,account.chobenchmark,account.fatbenchmark ];
-    return this.storage.executeSql(`UPDATE accounttable SET, patientid=?, firstname = ?, lastname = ? email = ?, birthday=?, chobenchmark=?,fatbenchmark=?  WHERE id = ${id}`, data)
+    return this.dbservice.getdb().executeSql(`UPDATE accounttable SET, patientid=?, firstname = ?, lastname = ? email = ?, birthday=?, chobenchmark=?,fatbenchmark=?  WHERE id = ${id}`, data)
     .then(data => {
       this.getAccounts();
     })
   }
 
-  // // Delete
-  // deleteFood(uuid) {
-  //   var q =  "DELETE FROM dailyfoodtable WHERE uuid = " +'"' + uuid + '"';
-  //   console.log("the query is : " + q);
-  //   return this.storage.executeSql(q)
-  //   .then(_ => {
-  //     this.getFoods();
-  //   });
-  // }
-
-
-
+  // Delete
+  deleteSong(id) {
+    return this.dbservice.getdb().executeSql('DELETE FROM accounttable WHERE id = ?', [id])
+    .then(_ => {
+      this.getAccounts();
+    });
+  }
 }

@@ -26,6 +26,21 @@ export class Food {
     timeframe: string;
     category: string;
     food_name: string;
+    food_type: string;
+    unit: string;
+    qty: number;
+    cho: number;
+    fat: number;
+
+  }
+
+  export class System{
+    id: number;
+    uuid: string;
+    timeframe: string;
+    category: string;
+    food_name: string;
+    food_type: string;
     unit: string;
     qty: number;
     cho: number;

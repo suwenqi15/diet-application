@@ -71,24 +71,11 @@ export class RecordService {
     });
   }
 
-  
-
-
-
-  // exportJson(){
-  //   for (let entry of this.storage) {console.log(entry)};
-  //   this.sqlPorter.exportDbToJson(this.storage).then(res=>{
-
-    //   console.log("kyl: read res result json in service"+ res);
-    //  console.log("kyl: read result json in service"+ res.data.inserts.dailyrecordtable);
-
-    // });
 
   }
   
   
 
-  //this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
 
 
 

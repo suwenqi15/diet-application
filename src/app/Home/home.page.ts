@@ -8,12 +8,12 @@ import { RecordService } from '../services/record.service';
 import { DatabaseService } from '../services/database.service';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
 })
 
-export class Tab1Page { 
+export class HomePage { 
   @ViewChild("choinput") choinput;
   mainForm: FormGroup;
   Data: any[] = []
@@ -59,15 +59,6 @@ export class Tab1Page {
   fat: new FormControl(''),
 });
 
-
-// pod useful command: 🍓
-// https://github.com/ionic-team/capacitor/issues/1676
-// https://github.com/ionic-team/capacitor/issues/1755
-// sudo npm install -g cordova ionic
-// /Users/kaiyanliu/Desktop/diet-application/ios/App
-// kaiyanliu@Kaiyans-iMac App % ls
-// App		App.xcodeproj	App.xcworkspace	Podfile		Podfile.lock	Pods		public
-// kaiyanliu@Kaiyans-iMac App % 
 
 
 
@@ -694,6 +685,7 @@ removeItemOthers(i){
 
 
      this.dailyrecorddb.addRecord( this.myDate ,this.curChoTotal,this.curFatTotal);
+    //  this.dailyrecorddb.getRecords( this.myDate ,this.curChoTotal,this.curFatTotal);
     }
 
     // analyzing part:
@@ -777,6 +769,22 @@ removeItemOthers(i){
   
   
   
+
+
+
+
+
+// pod useful command: 🍓
+// https://github.com/ionic-team/capacitor/issues/1676
+// https://github.com/ionic-team/capacitor/issues/1755
+// sudo npm install -g cordova ionic
+// /Users/kaiyanliu/Desktop/diet-application/ios/App
+// kaiyanliu@Kaiyans-iMac App % ls
+// App		App.xcodeproj	App.xcworkspace	Podfile		Podfile.lock	Pods		public
+// kaiyanliu@Kaiyans-iMac App % 
+
+
+
   // section for database
 
 

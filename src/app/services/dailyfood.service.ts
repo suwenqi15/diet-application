@@ -105,6 +105,9 @@ export class Dailyfoodservice {
     });
   }
 
+
+}
+
     // Update
   // updateFood(id, food: Food) {
   //   let data = [food.timeframe, food.category, food.food_name, food.unit,food.qty,food.cho,food.fat ];
@@ -113,7 +116,3 @@ export class Dailyfoodservice {
   //     this.getFoods();
   //   })
   // }
-
-
-
-}

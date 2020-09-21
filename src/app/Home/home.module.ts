@@ -1,16 +1,14 @@
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Tab1Page } from './tab1.page';
+import { FormsModule } from '@angular/forms';
+import { HomePage } from './home.page';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
-import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { ChartsModule } from 'ng2-charts';
+import { HomePageRoutingModule } from './home-routing.module';
 import { FoodCardComponent } from '../foodcard/foodcard.component';
 import { CardComponent } from '../card/card.component';
-
-
 
 @NgModule({
   imports: [
@@ -18,12 +16,12 @@ import { CardComponent } from '../card/card.component';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule,
+    HomePageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [Tab1Page,
+  declarations: [HomePage,
   FoodCardComponent,
   CardComponent
   ]
 })
-export class Tab1PageModule {}
+export class HomePageModule {}

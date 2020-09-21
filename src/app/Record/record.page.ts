@@ -2,19 +2,19 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
-import { EmailValidator } from '@angular/forms';
 import { RecordService } from '../services/record.service';
+import { EmailValidator } from '@angular/forms';
 import { DatabaseService } from '../services/database.service';
 
 
 
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-record',
+  templateUrl: 'record.page.html',
+  styleUrls: ['record.page.scss']
 })
-export class Tab1Page {
+export class RecordPage {
 
   page = 0;
   totalPages = 10;

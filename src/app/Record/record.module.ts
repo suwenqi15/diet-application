@@ -1,14 +1,15 @@
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Tab1Page } from './tab1.page';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecordPage } from './record.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
-import { Tab1PageRoutingModule } from './tab1-routing.module';
+import { RecordRoutingModule } from './record-routing.module';
 import { FoodCardComponent } from '../foodcard/foodcard.component';
 import { CardComponent } from '../card/card.component';
+import { ChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   imports: [
@@ -16,12 +17,12 @@ import { CardComponent } from '../card/card.component';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule,
+    RecordRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [Tab1Page,
+  declarations: [RecordPage,
   FoodCardComponent,
   CardComponent
   ]
 })
-export class Tab1PageModule {}
+export class RecordModule {}
